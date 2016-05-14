@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-
+#import "WHFileListController.h"
 @interface AppDelegate ()
 
 @end
@@ -16,6 +16,14 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    self.window = [[UIWindow alloc]initWithFrame:[[UIScreen mainScreen] bounds]];
+    
+    
+    UINavigationController *navi = [[UINavigationController alloc]initWithRootViewController:[[WHFileListController alloc]init]];
+    
+    self.window.rootViewController = navi;
+    [self.window makeKeyAndVisible];
+
     // Override point for customization after application launch.
     return YES;
 }

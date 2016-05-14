@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  WHFileListController.h
 //  MyCoolCodeReader
 //
 //  Created by Wayne on 16/5/14.
@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
-
-
+@interface WHFileListController : UIViewController
+@property (strong, nonatomic) UITableView *tableView;
 @end
-

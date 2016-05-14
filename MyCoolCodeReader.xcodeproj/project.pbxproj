@@ -9,10 +9,11 @@
 /* Begin PBXBuildFile section */
 		B0AB637F1CE71149000C3BEA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B0AB637E1CE71149000C3BEA /* main.m */; };
 		B0AB63821CE71149000C3BEA /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B0AB63811CE71149000C3BEA /* AppDelegate.m */; };
-		B0AB63851CE71149000C3BEA /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0AB63841CE71149000C3BEA /* ViewController.m */; };
-		B0AB63881CE71149000C3BEA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B0AB63861CE71149000C3BEA /* Main.storyboard */; };
 		B0AB638A1CE71149000C3BEA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B0AB63891CE71149000C3BEA /* Assets.xcassets */; };
 		B0AB638D1CE71149000C3BEA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B0AB638B1CE71149000C3BEA /* LaunchScreen.storyboard */; };
+		B0AB639F1CE717DD000C3BEA /* WHFileListController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0AB639E1CE717DD000C3BEA /* WHFileListController.m */; };
+		B0AB63A21CE71C27000C3BEA /* WHFileListTool.m in Sources */ = {isa = PBXBuildFile; fileRef = B0AB63A11CE71C27000C3BEA /* WHFileListTool.m */; };
+		B0AB63A51CE71C3A000C3BEA /* WHFile.m in Sources */ = {isa = PBXBuildFile; fileRef = B0AB63A41CE71C3A000C3BEA /* WHFile.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,12 +21,15 @@
 		B0AB637E1CE71149000C3BEA /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		B0AB63801CE71149000C3BEA /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		B0AB63811CE71149000C3BEA /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		B0AB63831CE71149000C3BEA /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		B0AB63841CE71149000C3BEA /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		B0AB63871CE71149000C3BEA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B0AB63891CE71149000C3BEA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B0AB638C1CE71149000C3BEA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B0AB638E1CE71149000C3BEA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B0AB639D1CE717DD000C3BEA /* WHFileListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WHFileListController.h; sourceTree = "<group>"; };
+		B0AB639E1CE717DD000C3BEA /* WHFileListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WHFileListController.m; sourceTree = "<group>"; };
+		B0AB63A01CE71C27000C3BEA /* WHFileListTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WHFileListTool.h; sourceTree = "<group>"; };
+		B0AB63A11CE71C27000C3BEA /* WHFileListTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WHFileListTool.m; sourceTree = "<group>"; };
+		B0AB63A31CE71C3A000C3BEA /* WHFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WHFile.h; sourceTree = "<group>"; };
+		B0AB63A41CE71C3A000C3BEA /* WHFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WHFile.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,11 +62,14 @@
 		B0AB637C1CE71149000C3BEA /* MyCoolCodeReader */ = {
 			isa = PBXGroup;
 			children = (
+				B0AB63941CE71716000C3BEA /* Controller */,
+				B0AB63951CE71716000C3BEA /* Lib */,
+				B0AB63961CE71716000C3BEA /* Model */,
+				B0AB63971CE71716000C3BEA /* Resource */,
+				B0AB63981CE71716000C3BEA /* Utility */,
+				B0AB63991CE71716000C3BEA /* View */,
 				B0AB63801CE71149000C3BEA /* AppDelegate.h */,
 				B0AB63811CE71149000C3BEA /* AppDelegate.m */,
-				B0AB63831CE71149000C3BEA /* ViewController.h */,
-				B0AB63841CE71149000C3BEA /* ViewController.m */,
-				B0AB63861CE71149000C3BEA /* Main.storyboard */,
 				B0AB63891CE71149000C3BEA /* Assets.xcassets */,
 				B0AB638B1CE71149000C3BEA /* LaunchScreen.storyboard */,
 				B0AB638E1CE71149000C3BEA /* Info.plist */,
@@ -77,6 +84,54 @@
 				B0AB637E1CE71149000C3BEA /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		B0AB63941CE71716000C3BEA /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				B0AB639D1CE717DD000C3BEA /* WHFileListController.h */,
+				B0AB639E1CE717DD000C3BEA /* WHFileListController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		B0AB63951CE71716000C3BEA /* Lib */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Lib;
+			sourceTree = "<group>";
+		};
+		B0AB63961CE71716000C3BEA /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				B0AB63A01CE71C27000C3BEA /* WHFileListTool.h */,
+				B0AB63A11CE71C27000C3BEA /* WHFileListTool.m */,
+				B0AB63A31CE71C3A000C3BEA /* WHFile.h */,
+				B0AB63A41CE71C3A000C3BEA /* WHFile.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		B0AB63971CE71716000C3BEA /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Resource;
+			sourceTree = "<group>";
+		};
+		B0AB63981CE71716000C3BEA /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Utility;
+			sourceTree = "<group>";
+		};
+		B0AB63991CE71716000C3BEA /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -105,6 +160,7 @@
 		B0AB63721CE71149000C3BEA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				CLASSPREFIX = WH;
 				LastUpgradeCheck = 0710;
 				ORGANIZATIONNAME = WayneHu;
 				TargetAttributes = {
@@ -139,7 +195,6 @@
 			files = (
 				B0AB638D1CE71149000C3BEA /* LaunchScreen.storyboard in Resources */,
 				B0AB638A1CE71149000C3BEA /* Assets.xcassets in Resources */,
-				B0AB63881CE71149000C3BEA /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -150,8 +205,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B0AB63851CE71149000C3BEA /* ViewController.m in Sources */,
+				B0AB63A21CE71C27000C3BEA /* WHFileListTool.m in Sources */,
 				B0AB63821CE71149000C3BEA /* AppDelegate.m in Sources */,
+				B0AB63A51CE71C3A000C3BEA /* WHFile.m in Sources */,
+				B0AB639F1CE717DD000C3BEA /* WHFileListController.m in Sources */,
 				B0AB637F1CE71149000C3BEA /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -159,14 +216,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		B0AB63861CE71149000C3BEA /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				B0AB63871CE71149000C3BEA /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		B0AB638B1CE71149000C3BEA /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -301,6 +350,7 @@
 				B0AB63931CE71149000C3BEA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
