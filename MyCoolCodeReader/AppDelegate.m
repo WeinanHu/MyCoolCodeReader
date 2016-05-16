@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "WHFileListController.h"
 #import "WHFileListTool.h"
+#import "WHWebsiteListController.h"
 @interface AppDelegate ()
 
 @end
@@ -24,7 +25,21 @@
     fileListController.currentPath = DOCUMENT_DIRECTORY;
     UINavigationController *navi = [[UINavigationController alloc]initWithRootViewController:fileListController];
     
-    self.window.rootViewController = navi;
+    WHWebsiteListController *webListController = [[WHWebsiteListController alloc]initWithStyle:UITableViewStyleGrouped];
+    UINavigationController *naviSecond = [[UINavigationController alloc]initWithRootViewController:webListController];
+    
+    UITabBarController *tabBarController = [[UITabBarController alloc]init];
+    
+    [tabBarController setViewControllers:@[navi,naviSecond]];
+    [tabBarController setSelectedIndex:0];
+    navi.tabBarItem.title = @"我的文件";
+    navi.tabBarItem.image = [UIImage imageNamed:@"file"];
+    navi.tabBarItem.selectedImage = [UIImage imageNamed:@"file_select"];
+    naviSecond.tabBarItem.title = @"网络下载";
+    naviSecond.tabBarItem.image = [UIImage imageNamed:@"net"];
+    naviSecond.tabBarItem.selectedImage = [UIImage imageNamed:@"net_select"];
+    
+    self.window.rootViewController = tabBarController;
     [self.window makeKeyAndVisible];
     [WHFileListTool creatHelloWorld];
     // Override point for customization after application launch.

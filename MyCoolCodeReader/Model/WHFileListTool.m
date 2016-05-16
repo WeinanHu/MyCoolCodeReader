@@ -28,16 +28,20 @@ static WHFileListTool* fileListTool;
 -(NSArray*)getFilesAtPath:(NSString*)path{
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSError *error = nil;
-    NSArray *files = [fileManager subpathsOfDirectoryAtPath:path error:&error];
-    
-    return [self toModelsWithPathes:files];
+    NSArray *files = [fileManager contentsOfDirectoryAtPath:path error:&error];
+    NSMutableArray *mutaArr = [NSMutableArray array];
+    for (NSString *str in files) {
+        NSString *fileCompleteStr = [path stringByAppendingPathComponent:str];
+        [mutaArr addObject:fileCompleteStr];
+    }
+    return [self toModelsWithPathes:mutaArr];
 }
 -(NSArray*)toModelsWithPathes:(NSArray*)pathes{
     NSMutableArray *mutaArr = [NSMutableArray array];
     NSFileManager *fileManager = [NSFileManager defaultManager];
     for (NSString *path in pathes) {
         BOOL isDirectory;
-        if (![fileManager fileExistsAtPath:[DOCUMENT_DIRECTORY stringByAppendingPathComponent:path] isDirectory:&isDirectory]){
+        if (![fileManager fileExistsAtPath:path isDirectory:&isDirectory]){
             continue;
         }
         //去掉.开头的文件
@@ -46,13 +50,13 @@ static WHFileListTool* fileListTool;
         }
         NSLog(@"%d",isDirectory);
         WHFile *file = [WHFile new];
-        file.fileName = [DOCUMENT_DIRECTORY stringByAppendingPathComponent:[path lastPathComponent]];
+        file.fileName = path;
         file.isDirectory = isDirectory;
         [mutaArr addObject:file];
     }
     return [mutaArr copy];
 //    WHFile *file = [WHFile new];
-    return nil;
+  
 }
 
 +(void)creatHelloWorld{

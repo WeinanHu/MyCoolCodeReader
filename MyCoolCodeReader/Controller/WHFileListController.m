@@ -98,6 +98,7 @@
 //        NSError *error = nil;
 //        NSString *code = [NSString stringWithContentsOfFile:sourceController.filePath encoding:NSUTF8StringEncoding error:&error];
 //        [sourceController loadCode:code];
+        sourceController.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:sourceController animated:YES];
     }
     
