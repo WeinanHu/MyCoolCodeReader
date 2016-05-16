@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "WHFileListController.h"
+#import "WHFileListTool.h"
 @interface AppDelegate ()
 
 @end
@@ -18,12 +19,14 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     self.window = [[UIWindow alloc]initWithFrame:[[UIScreen mainScreen] bounds]];
     
-    
-    UINavigationController *navi = [[UINavigationController alloc]initWithRootViewController:[[WHFileListController alloc]init]];
+    WHFileListController *fileListController =[[WHFileListController alloc]init];
+    fileListController.index = 0;
+    fileListController.currentPath = DOCUMENT_DIRECTORY;
+    UINavigationController *navi = [[UINavigationController alloc]initWithRootViewController:fileListController];
     
     self.window.rootViewController = navi;
     [self.window makeKeyAndVisible];
-
+    [WHFileListTool creatHelloWorld];
     // Override point for customization after application launch.
     return YES;
 }

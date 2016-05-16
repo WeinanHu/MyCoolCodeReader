@@ -10,4 +10,7 @@
 
 @interface WHFileListController : UIViewController
 @property (strong, nonatomic) UITableView *tableView;
+@property(nonatomic,assign) int index;
+@property(nonatomic,strong) NSString *currentPath;
+
 @end

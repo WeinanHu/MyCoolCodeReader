@@ -8,9 +8,11 @@
 
 #import <Foundation/Foundation.h>
 #import "WHFile.h"
+#define DOCUMENT_DIRECTORY NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).lastObject
 @interface WHFileListTool : NSObject
 +(instancetype)shareFileListTool;
 -(NSArray*)getFilesInDocument;
 
 -(NSArray*)getFilesAtPath:(NSString*)path;
++(void)creatHelloWorld;
 @end
