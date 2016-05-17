@@ -49,33 +49,16 @@
 */
 -(BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
     NSLog(@"%@",request);
-    //    if (navigationType==UIWebViewNavigationTypeLinkClicked) {
     NSURL *URL = request.URL;
-    NSURLRequest *requestURL = [NSURLRequest requestWithURL:URL];
-    NSURLSession *session = [NSURLSession sharedSession];
-    __weak typeof(self) safe = self;
-    NSURLSessionDataTask *task = [session dataTaskWithRequest:requestURL completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        if (error==nil) {
-            if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
-                NSDictionary *dic = [(NSHTTPURLResponse *)response allHeaderFields];
-                NSString *contentType = (NSString*)[dic objectForKey:@"Content-Type"];
-                NSString *contentDisposition = [dic objectForKey:@"Content-Disposition"];
-                NSLog(@"=== %@ : %@", contentType, contentDisposition);
-                
-                if ([contentDisposition containsString:@"filename="]) {
-                    safe.downloadURL = URL;
-                    NSLog(@"发现下载链接");
-                    UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"发现下载链接" message:@"是否下载？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"下载", nil];
-                    [[UIApplication sharedApplication].keyWindow addSubview:alertView];
-                    [alertView show];
-                }
-            }
-        }
-    }];
-    [task resume];
-    
-    
-    //    }
+    NSString *urlStr = [URL absoluteString];
+    if ([urlStr containsString:@"codeload.github.com/"]&&[urlStr containsString:@"/zip/master"]) {
+        self.downloadURL = URL;
+        NSLog(@"发现下载链接");
+        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"发现下载链接" message:@"是否下载？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"下载", nil];
+        [[UIApplication sharedApplication].keyWindow addSubview:alertView];
+        [alertView show];
+        
+    }
     
     return YES;
     
@@ -85,10 +68,19 @@
     AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
     NSURLRequest *request = [NSURLRequest requestWithURL:URL];
     NSProgress *progress = [[NSProgress alloc]init];
+    [[WHDownloadTool sharedWHDownloadTool]addDownload:URL progress:progress];
     NSURLSessionDownloadTask *downloadTask = [manager downloadTaskWithRequest:request progress:&progress destination:^NSURL *(NSURL *targetPath, NSURLResponse *response) {
-        [[WHDownloadTool sharedWHDownloadTool]addDownload:URL progress:progress];
-        NSURL *documentsDirectoryURL = [[NSFileManager defaultManager] URLForDirectory:NSDocumentDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:NO error:nil];
-        return [documentsDirectoryURL URLByAppendingPathComponent:[response suggestedFilename]];
+        NSUInteger sameFileCount = 0;
+        NSString *filePath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).lastObject stringByAppendingPathComponent:[response suggestedFilename]];
+        while ([[NSFileManager defaultManager]fileExistsAtPath:filePath]) {
+            sameFileCount++;
+            NSString *tmpStr = [filePath stringByDeletingPathExtension];
+            NSString *addTmpStr = [tmpStr stringByAppendingString:[NSString stringWithFormat:@"%ld",sameFileCount]];
+            filePath = [addTmpStr stringByAppendingPathExtension:[filePath pathExtension]];
+        }
+        NSURL *documentsDirectoryURL = [[NSURL alloc]initFileURLWithPath:filePath];
+        return documentsDirectoryURL;
+//        return [documentsDirectoryURL URLByAppendingPathComponent:[filePath lastPathComponent]];
     } completionHandler:^(NSURLResponse *response, NSURL *filePath, NSError *error) {
         NSLog(@"File downloaded to: %@", filePath);
     }];
@@ -106,5 +98,6 @@
             [self downloadWithURL:self.URL];
             break;
     }
+    
 }
 @end

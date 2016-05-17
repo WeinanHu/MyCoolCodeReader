@@ -24,11 +24,20 @@ singleton_implementation(WHDownloadTool);
     return self.downloadList;
     
 }
+static NSProgress* pro;
 -(void)addDownload:(NSURL *)url progress:(NSProgress *)progress{
     if (self.downloadList ==nil) {
         self.downloadList = [NSMutableArray array];
     }
+    pro = progress;
+    NSTimer *time = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(showProgress:) userInfo:nil repeats:YES];
     NSDictionary *dic = @{@"url":url,@"progress":progress};
     [self.downloadList addObject:dic];
+}
+-(void)showProgress:(NSProgress *)progress{
+    if (pro.totalUnitCount) {
+        
+        NSLog(@"%g",1.0*pro.completedUnitCount/pro.totalUnitCount);
+    }
 }
 @end

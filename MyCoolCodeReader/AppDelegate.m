@@ -39,6 +39,12 @@
     naviSecond.tabBarItem.image = [UIImage imageNamed:@"net"];
     naviSecond.tabBarItem.selectedImage = [UIImage imageNamed:@"net_select"];
     
+//    int line = 64;
+//    navi.tabBarItem.image = [[UIImage imageNamed:@"file"] thumbNailWithSize:CGSizeMake(line, line)];
+//    navi.tabBarItem.selectedImage = [[UIImage imageNamed:@"file_select"] thumbNailWithSize:CGSizeMake(line, line)];
+//    naviSecond.tabBarItem.title = @"网络下载";
+//    naviSecond.tabBarItem.image = [[UIImage imageNamed:@"net"]thumbNailWithSize:CGSizeMake(line, line)];
+//    naviSecond.tabBarItem.selectedImage = [[UIImage imageNamed:@"net_select"]thumbNailWithSize:CGSizeMake(line, line)];
     self.window.rootViewController = tabBarController;
     [self.window makeKeyAndVisible];
     [WHFileListTool creatHelloWorld];

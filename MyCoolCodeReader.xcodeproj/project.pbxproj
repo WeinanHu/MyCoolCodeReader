@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B006B4F21CEB3AC40053B687 /* UIImage+WHThumbNailImage.m in Sources */ = {isa = PBXBuildFile; fileRef = B006B4F11CEB3AC40053B687 /* UIImage+WHThumbNailImage.m */; };
 		B0AB637F1CE71149000C3BEA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B0AB637E1CE71149000C3BEA /* main.m */; };
 		B0AB63821CE71149000C3BEA /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B0AB63811CE71149000C3BEA /* AppDelegate.m */; };
 		B0AB638A1CE71149000C3BEA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B0AB63891CE71149000C3BEA /* Assets.xcassets */; };
@@ -33,6 +34,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B006B4F01CEB3AC40053B687 /* UIImage+WHThumbNailImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+WHThumbNailImage.h"; sourceTree = "<group>"; };
+		B006B4F11CEB3AC40053B687 /* UIImage+WHThumbNailImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+WHThumbNailImage.m"; sourceTree = "<group>"; };
+		B006B4F31CEB3B000053B687 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		B0AB637A1CE71149000C3BEA /* MyCoolCodeReader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyCoolCodeReader.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B0AB637E1CE71149000C3BEA /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		B0AB63801CE71149000C3BEA /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -91,6 +95,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B006B4EF1CEB3AC40053B687 /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				B006B4F01CEB3AC40053B687 /* UIImage+WHThumbNailImage.h */,
+				B006B4F11CEB3AC40053B687 /* UIImage+WHThumbNailImage.m */,
+			);
+			path = Category;
+			sourceTree = "<group>";
+		};
 		B0AB63711CE71149000C3BEA = {
 			isa = PBXGroup;
 			children = (
@@ -110,6 +123,7 @@
 		B0AB637C1CE71149000C3BEA /* MyCoolCodeReader */ = {
 			isa = PBXGroup;
 			children = (
+				B006B4EF1CEB3AC40053B687 /* Category */,
 				B0AB63941CE71716000C3BEA /* Controller */,
 				B0AB63951CE71716000C3BEA /* Lib */,
 				B0AB63961CE71716000C3BEA /* Model */,
@@ -123,6 +137,7 @@
 				B0AB638E1CE71149000C3BEA /* Info.plist */,
 				B0E44A3F1CE99208003EBC83 /* HelloWorld.txt */,
 				B0AB637D1CE71149000C3BEA /* Supporting Files */,
+				B006B4F31CEB3B000053B687 /* PrefixHeader.pch */,
 			);
 			path = MyCoolCodeReader;
 			sourceTree = "<group>";
@@ -322,6 +337,7 @@
 				B0E44A9F1CE9DB8A003EBC83 /* AFNetworkReachabilityManager.m in Sources */,
 				B0E44AA31CE9DB8A003EBC83 /* AFURLResponseSerialization.m in Sources */,
 				B0E44A3A1CE987DF003EBC83 /* SourceViewController.m in Sources */,
+				B006B4F21CEB3AC40053B687 /* UIImage+WHThumbNailImage.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -425,6 +441,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = MyCoolCodeReader/PrefixHeader.pch;
 				INFOPLIST_FILE = MyCoolCodeReader/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -437,6 +455,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = MyCoolCodeReader/PrefixHeader.pch;
 				INFOPLIST_FILE = MyCoolCodeReader/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
