@@ -7,9 +7,17 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "WHDownloadFile.h"
 #import "Singleton.h"
 @interface WHDownloadTool : NSObject
 singleton_interface(WHDownloadTool);
 -(NSArray*)getDownloadList;
--(void)addDownload:(NSURL*)url progress:(NSProgress *)progress;
+
+-(void)downloadWithURL:(NSURL*)url;
+-(NSArray*)getProgressList;
+-(void)removeManagerAtIndex:(NSInteger)index;
+@property(nonatomic,strong) NSMutableArray *downloadList;
+@property(nonatomic,strong) NSMutableArray *progressArray;
+@property(nonatomic,strong) NSMutableArray *netManagerArray;
+
 @end

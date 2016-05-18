@@ -25,6 +25,22 @@
     [self setUpButtons];
     // Do any additional setup after loading the view.
 }
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context{
+    if ([keyPath isEqualToString:@"filesArray"]) {
+        
+//        self.filesArray = change[@"new"];
+        [self.tableView reloadData];
+    }
+}
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:YES];
+    self.filesArray = nil;
+    [self.tableView reloadData];
+    [self addObserver:self forKeyPath:@"filesArray" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:nil];
+}
+-(void)viewWillDisappear:(BOOL)animated{
+    [self removeObserver:self forKeyPath:@"filesArray"];
+}
 -(void)viewDidLayoutSubviews{
     [super viewDidLayoutSubviews];
     NSLog(@"%f",[UIScreen mainScreen ].bounds.size.width);
@@ -103,6 +119,21 @@
     }
     
     
+}
+-(BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath{
+    return YES;
+}
+-(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        WHFile *file =self.filesArray[indexPath.row];
+        NSString *filePath = file.fileName;
+        if ([[NSFileManager defaultManager]fileExistsAtPath:filePath]) {
+            NSError *error = nil;
+            [[NSFileManager defaultManager] removeItemAtPath:filePath error:&error];
+            self.filesArray = nil;
+//            [self.tableView reloadData];
+        }
+    }
 }
 /*
 #pragma mark - Navigation

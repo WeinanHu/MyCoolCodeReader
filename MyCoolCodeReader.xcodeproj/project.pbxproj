@@ -15,6 +15,8 @@
 		B0AB639F1CE717DD000C3BEA /* WHFileListController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0AB639E1CE717DD000C3BEA /* WHFileListController.m */; };
 		B0AB63A21CE71C27000C3BEA /* WHFileListTool.m in Sources */ = {isa = PBXBuildFile; fileRef = B0AB63A11CE71C27000C3BEA /* WHFileListTool.m */; };
 		B0AB63A51CE71C3A000C3BEA /* WHFile.m in Sources */ = {isa = PBXBuildFile; fileRef = B0AB63A41CE71C3A000C3BEA /* WHFile.m */; };
+		B0C556671CEC3E8D002D1996 /* WHDownloadListController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0C556661CEC3E8D002D1996 /* WHDownloadListController.m */; };
+		B0C5566A1CEC4478002D1996 /* WHDownloadFile.m in Sources */ = {isa = PBXBuildFile; fileRef = B0C556691CEC4478002D1996 /* WHDownloadFile.m */; };
 		B0E44A3A1CE987DF003EBC83 /* SourceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0E44A391CE987DF003EBC83 /* SourceViewController.m */; };
 		B0E44A3C1CE98BF0003EBC83 /* html in Resources */ = {isa = PBXBuildFile; fileRef = B0E44A3B1CE98BF0003EBC83 /* html */; };
 		B0E44A401CE99208003EBC83 /* HelloWorld.txt in Resources */ = {isa = PBXBuildFile; fileRef = B0E44A3F1CE99208003EBC83 /* HelloWorld.txt */; };
@@ -50,6 +52,10 @@
 		B0AB63A11CE71C27000C3BEA /* WHFileListTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WHFileListTool.m; sourceTree = "<group>"; };
 		B0AB63A31CE71C3A000C3BEA /* WHFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WHFile.h; sourceTree = "<group>"; };
 		B0AB63A41CE71C3A000C3BEA /* WHFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WHFile.m; sourceTree = "<group>"; };
+		B0C556651CEC3E8D002D1996 /* WHDownloadListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WHDownloadListController.h; sourceTree = "<group>"; };
+		B0C556661CEC3E8D002D1996 /* WHDownloadListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WHDownloadListController.m; sourceTree = "<group>"; };
+		B0C556681CEC4478002D1996 /* WHDownloadFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WHDownloadFile.h; sourceTree = "<group>"; };
+		B0C556691CEC4478002D1996 /* WHDownloadFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WHDownloadFile.m; sourceTree = "<group>"; };
 		B0E44A381CE987DF003EBC83 /* SourceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SourceViewController.h; sourceTree = "<group>"; };
 		B0E44A391CE987DF003EBC83 /* SourceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SourceViewController.m; sourceTree = "<group>"; };
 		B0E44A3B1CE98BF0003EBC83 /* html */ = {isa = PBXFileReference; lastKnownFileType = folder; name = html; path = MyCoolCodeReader/html; sourceTree = SOURCE_ROOT; };
@@ -161,6 +167,8 @@
 				B0E44A861CE9BACD003EBC83 /* WHWebsiteListController.m */,
 				B0E44AA81CE9EE6D003EBC83 /* WHWebViewController.h */,
 				B0E44AA91CE9EE6D003EBC83 /* WHWebViewController.m */,
+				B0C556651CEC3E8D002D1996 /* WHDownloadListController.h */,
+				B0C556661CEC3E8D002D1996 /* WHDownloadListController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -182,6 +190,8 @@
 				B0AB63A11CE71C27000C3BEA /* WHFileListTool.m */,
 				B0AB63A31CE71C3A000C3BEA /* WHFile.h */,
 				B0AB63A41CE71C3A000C3BEA /* WHFile.m */,
+				B0C556681CEC4478002D1996 /* WHDownloadFile.h */,
+				B0C556691CEC4478002D1996 /* WHDownloadFile.m */,
 				B0E44AAB1CE9F40B003EBC83 /* WHDownloadTool.h */,
 				B0E44AAC1CE9F40B003EBC83 /* WHDownloadTool.m */,
 			);
@@ -325,6 +335,8 @@
 				B0E44A9D1CE9DB8A003EBC83 /* AFHTTPRequestOperationManager.m in Sources */,
 				B0E44A841CE9B4DF003EBC83 /* PBWebViewController.m in Sources */,
 				B0AB63821CE71149000C3BEA /* AppDelegate.m in Sources */,
+				B0C556671CEC3E8D002D1996 /* WHDownloadListController.m in Sources */,
+				B0C5566A1CEC4478002D1996 /* WHDownloadFile.m in Sources */,
 				B0E44A9E1CE9DB8A003EBC83 /* AFHTTPSessionManager.m in Sources */,
 				B0E44AAA1CE9EE6D003EBC83 /* WHWebViewController.m in Sources */,
 				B0AB63A51CE71C3A000C3BEA /* WHFile.m in Sources */,

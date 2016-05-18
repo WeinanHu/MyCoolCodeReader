@@ -7,10 +7,11 @@
 //
 
 #import "WHWebViewController.h"
-#import "AFNetworking.h"
 #import "WHDownloadTool.h"
-@interface WHWebViewController ()<UIAlertViewDelegate>
+#import "WHDownloadListController.h"
+@interface WHWebViewController ()<UIAlertViewDelegate,UIPopoverPresentationControllerDelegate>
 @property(nonatomic,strong) NSURL *downloadURL;
+@property(nonatomic,strong) WHDownloadListController *downloadListController;
 @end
 
 @implementation WHWebViewController
@@ -26,11 +27,28 @@
 }
 
 -(void)clickDownloadButton{
-    NSArray *array = [[WHDownloadTool sharedWHDownloadTool]getDownloadList];
-    if (array.count) {
-        
-        NSLog(@"%@",array[0][@"progress"]);
-    }
+    
+//    if (![WHDownloadTool sharedWHDownloadTool].progressArray.count) {
+//        return;
+//    }
+//    NSProgress *progress2 = [WHDownloadTool sharedWHDownloadTool].progressArray[0];
+//    if (progress2) {
+//        
+//        NSLog(@"_______%@",progress2);
+//    }
+//    WHDownloadListController *downloadListController = [WHDownloadListController new];
+//    downloadListController.preferredContentSize = CGSizeMake(200, 400);
+//    UIPopoverController *popoverController = [[UIPopoverController alloc]initWithContentViewController:downloadListController];
+//    [popoverController presentPopoverFromRect:CGRectMake([UIScreen mainScreen].bounds.size.width-64, 20, 64, 44) inView:self.view permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
+    
+    
+    
+    self.downloadListController.modalPresentationStyle = UIModalPresentationPopover;
+    self.downloadListController.popoverPresentationController.sourceView = self.view;
+    self.downloadListController.popoverPresentationController.sourceRect = CGRectMake([UIScreen mainScreen].bounds.size.width-68, 20, 64, 44);
+    self.downloadListController.popoverPresentationController.permittedArrowDirections = UIPopoverArrowDirectionUp;
+    self.downloadListController.popoverPresentationController.delegate = self;
+    [self presentViewController:self.downloadListController animated:YES completion:nil];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -58,33 +76,25 @@
         [[UIApplication sharedApplication].keyWindow addSubview:alertView];
         [alertView show];
         
+        
+    }else if([[[[URL URLByDeletingLastPathComponent]URLByDeletingLastPathComponent]absoluteString ]isEqualToString:@"https://github.com/"]){
+        NSString *sourceStr = [NSString stringWithFormat:@"%@/%@",[[urlStr stringByDeletingLastPathComponent]lastPathComponent ] ,[urlStr lastPathComponent]];
+        NSString *completeSourceStr = [NSString stringWithFormat:@"https://codeload.github.com/%@/zip/master",sourceStr];
+        NSString *info =[NSString stringWithFormat:@"获取到%@",sourceStr.lastPathComponent];
+        self.downloadURL = [NSURL URLWithString:completeSourceStr];
+        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:info message:@"是否下载？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"下载", nil];
+        [[UIApplication sharedApplication].keyWindow addSubview:alertView];
+        [alertView show];
     }
+    
     
     return YES;
     
 }
 -(void)downloadWithURL:(NSURL*)URL {
-    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
-    AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
-    NSURLRequest *request = [NSURLRequest requestWithURL:URL];
-    NSProgress *progress = [[NSProgress alloc]init];
-    [[WHDownloadTool sharedWHDownloadTool]addDownload:URL progress:progress];
-    NSURLSessionDownloadTask *downloadTask = [manager downloadTaskWithRequest:request progress:&progress destination:^NSURL *(NSURL *targetPath, NSURLResponse *response) {
-        NSUInteger sameFileCount = 0;
-        NSString *filePath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).lastObject stringByAppendingPathComponent:[response suggestedFilename]];
-        while ([[NSFileManager defaultManager]fileExistsAtPath:filePath]) {
-            sameFileCount++;
-            NSString *tmpStr = [filePath stringByDeletingPathExtension];
-            NSString *addTmpStr = [tmpStr stringByAppendingString:[NSString stringWithFormat:@"%ld",sameFileCount]];
-            filePath = [addTmpStr stringByAppendingPathExtension:[filePath pathExtension]];
-        }
-        NSURL *documentsDirectoryURL = [[NSURL alloc]initFileURLWithPath:filePath];
-        return documentsDirectoryURL;
-//        return [documentsDirectoryURL URLByAppendingPathComponent:[filePath lastPathComponent]];
-    } completionHandler:^(NSURLResponse *response, NSURL *filePath, NSError *error) {
-        NSLog(@"File downloaded to: %@", filePath);
-    }];
-    [downloadTask resume];
+    
+    [[WHDownloadTool sharedWHDownloadTool]downloadWithURL:URL];
+    
 }
 #pragma mark - UIAlertViewDelegate
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
@@ -95,9 +105,21 @@
             
         default:
             
-            [self downloadWithURL:self.URL];
+            [self downloadWithURL:self.downloadURL];
             break;
     }
     
 }
+#pragma mark - UIPopoverPresentationControllerDelegate
+-(UIModalPresentationStyle)adaptivePresentationStyleForPresentationController:(UIPresentationController *)controller{
+    return UIModalPresentationNone;
+}
+#pragma mark - lazyload
+- (WHDownloadListController *)downloadListController {
+	if(_downloadListController == nil) {
+		_downloadListController = [[WHDownloadListController alloc] init];
+	}
+	return _downloadListController;
+}
+
 @end

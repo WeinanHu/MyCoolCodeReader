@@ -104,7 +104,7 @@
 
 - (NSArray *)websArray {
 	if(_websArray == nil) {
-		_websArray = @[@"https://github.com",@"https://codeload.github.com/WeinanHu/2048/zip/master",@"https://codeload.github.com/WeinanHu/WHMusic/zip/master",@"https://codeload.github.com/AFNetworking/AFNetworking/zip/master"];
+		_websArray = @[@"https://github.com",@"https://codeload.github.com/WeinanHu/2048/zip/master",@"https://codeload.github.com/WeinanHu/WHMusic/zip/master",@"https://codeload.github.com/AFNetworking/AFNetworking/zip/master",@"https://github.com/search"];
 	}
 	return _websArray;
 }
