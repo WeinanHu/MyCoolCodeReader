@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9059" systemVersion="15A282b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" initialViewController="01J-lp-oVM">
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -17,30 +19,48 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="My Cool Code Reader" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1mC-xW-yC1">
-                                <rect key="frame" x="19" y="235" width="337" height="197"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="blue" translatesAutoresizingMaskIntoConstraints="NO" id="ByJ-mD-P8c">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <animations/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="coolcode" translatesAutoresizingMaskIntoConstraints="NO" id="CeT-lb-fgI">
+                                <rect key="frame" x="48" y="194" width="280" height="280"/>
                                 <animations/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="197" id="0kr-Hh-c0A"/>
-                                    <constraint firstAttribute="width" constant="337" id="gCK-hh-9KX"/>
+                                    <constraint firstAttribute="width" secondItem="CeT-lb-fgI" secondAttribute="height" multiplier="1:1" id="C7v-4Z-c8d"/>
+                                    <constraint firstAttribute="width" constant="280" id="WJa-e1-xx5"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="34"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            </imageView>
                         </subviews>
                         <animations/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="1mC-xW-yC1" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="hWa-uL-2I2"/>
-                            <constraint firstItem="1mC-xW-yC1" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="lVe-tg-6Ge"/>
+                            <constraint firstItem="ByJ-mD-P8c" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="JjJ-ax-bPf"/>
+                            <constraint firstItem="CeT-lb-fgI" firstAttribute="width" secondItem="Ze5-6b-2t3" secondAttribute="width" multiplier="0.65" id="Q5b-zB-UIM"/>
+                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="ByJ-mD-P8c" secondAttribute="bottom" id="XmD-aZ-J7X"/>
+                            <constraint firstItem="CeT-lb-fgI" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="aNH-p5-CDU"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="CeT-lb-fgI" secondAttribute="trailing" constant="40" id="c5Q-EF-YlY"/>
+                            <constraint firstAttribute="trailing" secondItem="ByJ-mD-P8c" secondAttribute="trailing" id="kfV-MI-zup"/>
+                            <constraint firstItem="CeT-lb-fgI" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="v7t-Wz-29T"/>
+                            <constraint firstItem="CeT-lb-fgI" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" constant="40" id="yy1-Gh-cN2"/>
+                            <constraint firstItem="ByJ-mD-P8c" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="zxC-Te-G5E"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="Q5b-zB-UIM"/>
+                                <exclude reference="c5Q-EF-YlY"/>
+                                <exclude reference="yy1-Gh-cN2"/>
+                            </mask>
+                        </variation>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="53" y="375"/>
+            <point key="canvasLocation" x="52.5" y="374.5"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="blue" width="1" height="1"/>
+        <image name="coolcode" width="341" height="341"/>
+    </resources>
 </document>

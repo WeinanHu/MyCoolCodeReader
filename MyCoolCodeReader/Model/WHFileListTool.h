@@ -14,5 +14,6 @@
 -(NSArray*)getFilesInDocument;
 
 -(NSArray*)getFilesAtPath:(NSString*)path;
-+(void)creatHelloWorld;
+-(void)creatHelloWorld;
+-(void)loadUserInfo;
 @end

@@ -32,10 +32,10 @@
     
     [tabBarController setViewControllers:@[navi,naviSecond]];
     [tabBarController setSelectedIndex:0];
-    navi.tabBarItem.title = @"我的文件";
+    navi.tabBarItem.title = NSLocalizedString(@"myFile", nil);
     navi.tabBarItem.image = [UIImage imageNamed:@"file"];
     navi.tabBarItem.selectedImage = [UIImage imageNamed:@"file_select"];
-    naviSecond.tabBarItem.title = @"网络下载";
+    naviSecond.tabBarItem.title = NSLocalizedString(@"webDownload", nil);
     naviSecond.tabBarItem.image = [UIImage imageNamed:@"net"];
     naviSecond.tabBarItem.selectedImage = [UIImage imageNamed:@"net_select"];
     
@@ -47,7 +47,7 @@
 //    naviSecond.tabBarItem.selectedImage = [[UIImage imageNamed:@"net_select"]thumbNailWithSize:CGSizeMake(line, line)];
     self.window.rootViewController = tabBarController;
     [self.window makeKeyAndVisible];
-    [WHFileListTool creatHelloWorld];
+    [[WHFileListTool shareFileListTool]loadUserInfo];
     // Override point for customization after application launch.
   
     return YES;

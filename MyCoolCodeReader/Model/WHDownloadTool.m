@@ -23,6 +23,7 @@ singleton_implementation(WHDownloadTool);
 -(NSArray *)getProgressList{
     return [self.progressArray copy];
 }
+
 -(void)removeManagerAtIndex:(NSInteger)index{
     AFURLSessionManager *manager = self.netManagerArray[index];
     for (NSURLSessionTask* task in manager.tasks) {
@@ -72,6 +73,8 @@ singleton_implementation(WHDownloadTool);
     [self.downloadList addObject:downloadFile];
     [self.progressArray addObject:progress];
 }
+
+
 #pragma mark - lazyLoad
 - (NSMutableArray *)downloadList {
     if(_downloadList == nil) {

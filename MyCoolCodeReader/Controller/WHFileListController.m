@@ -9,8 +9,11 @@
 #import "WHFileListController.h"
 #import "WHFileListTool.h"
 #import "SourceViewController.h"
-@interface WHFileListController ()<UITableViewDataSource,UITableViewDelegate>
+#import "ZipArchive.h"
+#import "MBProgressHUD+KR.h"
+@interface WHFileListController ()<UITableViewDataSource,UITableViewDelegate,SSZipArchiveDelegate>
 @property(nonatomic,strong) NSArray *filesArray;
+@property(nonatomic,strong) WHFile *unZipFile;
 
 @end
 
@@ -56,12 +59,13 @@
     [self.view addSubview:self.tableView];
 }
 -(void)setUpNavigation{
-    [self.navigationController.navigationBar setTitleTextAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14],NSForegroundColorAttributeName:[UIColor colorWithRed:0.241 green:0.293 blue:1.000 alpha:1.000]}];
+//    [self.navigationController.navigationBar setTitleTextAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14],NSForegroundColorAttributeName:[UIColor colorWithRed:0.241 green:0.293 blue:1.000 alpha:1.000]}];
     self.navigationItem.title = [self.currentPath lastPathComponent];
 }
 
 -(void)setUpButtons{
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"up" style:UIBarButtonItemStylePlain target:self action:@selector(upFolder)];
+    NSString *upStr = NSLocalizedString(@"folderUp", nil);
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:upStr style:UIBarButtonItemStylePlain target:self action:@selector(upFolder)];
 //    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"Edit" style:UIBarButtonItemStylePlain target:self action:@selector(editFile)];
     
 }
@@ -93,7 +97,7 @@
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:identifier];
     }
     WHFile *file = self.filesArray[indexPath.row];
-    NSString *fileImage = file.isDirectory?@"📁":@"📄";
+    NSString *fileImage = file.isDirectory?@"📁":([file.fileName.pathExtension isEqualToString:@"zip"]?@"📚":@"📄");
     cell.textLabel.text = [fileImage stringByAppendingString:[file.fileName lastPathComponent]];
     
     return cell;
@@ -107,6 +111,14 @@
         fileListController.currentPath = file.fileName;
         
         [self.navigationController pushViewController:fileListController animated:YES];
+        
+    }else if([[file.fileName pathExtension]isEqualToString:@"zip"]){
+        
+        self.unZipFile = file;
+        NSString *info =[NSString stringWithFormat:@"%@%@",NSLocalizedString(@"unZip", nil),file.fileName.lastPathComponent];
+        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:info message:NSLocalizedString(@"unZipTheFile", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"no", nil) otherButtonTitles:NSLocalizedString(@"yes", nil), NSLocalizedString(@"yesAndCreateFolder", nil),nil];
+        [[UIApplication sharedApplication].keyWindow addSubview:alertView];
+        [alertView show];
         
     }else {
         SourceViewController *sourceController = [[SourceViewController alloc]init];
@@ -135,6 +147,41 @@
         }
     }
 }
+#pragma mark - UIAlertViewDelegate
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    WHFile *file = self.unZipFile;
+    NSString *fileDirectory = [file.fileName stringByDeletingLastPathComponent];
+    switch (buttonIndex) {
+        case 0:
+            NSLog(@"cancel zip");
+            break;
+        case 1:
+            [SSZipArchive unzipFileAtPath:file.fileName toDestination:fileDirectory delegate:self];
+            break;
+        default:
+            fileDirectory = [fileDirectory stringByAppendingPathComponent:[file.fileName stringByDeletingPathExtension].lastPathComponent];
+            [SSZipArchive unzipFileAtPath:file.fileName toDestination:fileDirectory delegate:self];
+            
+            break;
+    }
+    
+}
+#pragma mark - SSZipArchiveDelegate
+
+-(void)zipArchiveWillUnzipArchiveAtPath:(NSString *)path zipInfo:(unz_global_info)zipInfo{
+    NSLog(@"-------%ld%ld%ld",zipInfo.number_entry,zipInfo.number_disk_with_CD,zipInfo.size_comment);
+    
+}
+-(void)zipArchiveProgressEvent:(unsigned long long)loaded total:(unsigned long long)total{
+    NSLog(@"%f",1.0*loaded/total);
+}
+-(void)zipArchiveDidUnzipArchiveAtPath:(NSString *)path zipInfo:(unz_global_info)zipInfo unzippedPath:(NSString *)unzippedPath{
+    NSLog(@"+++%ld%ld%ld",zipInfo.number_entry,zipInfo.number_disk_with_CD,zipInfo.size_comment);
+    [MBProgressHUD showSuccess:@"zip finished"];
+    self.filesArray = nil;
+}
+
+
 /*
 #pragma mark - Navigation
 
@@ -151,5 +198,7 @@
 	}
 	return _filesArray;
 }
+
+
 
 @end

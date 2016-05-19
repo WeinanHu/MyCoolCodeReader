@@ -10,7 +10,7 @@
 
 static NSString *html = nil;
 
-@interface SourceViewController ()
+@interface SourceViewController ()<UIWebViewDelegate>
 
 @end
 
@@ -30,7 +30,7 @@ static NSString *html = nil;
         self.webView.scalesPageToFit = YES;
         self.webView.opaque = NO;
         self.view.backgroundColor = self.webView.backgroundColor = [UIColor colorWithRed:0.2 green:0.2 blue:0.2 alpha:1];
-        [self.view addSubview:self.webView];
+        [self.view insertSubview:self.webView atIndex:0];
         self.view.autoresizingMask = self.webView.autoresizingMask;
         
     }
@@ -40,7 +40,17 @@ static NSString *html = nil;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	
+    //CGSize screenSize = [UIScreen mainScreen].bounds.size;
+    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 150, 100)];
+    label.center = self.view.center;
+    label.backgroundColor = [UIColor colorWithWhite:0.841 alpha:0.720];
+    label.text = NSLocalizedString(@"loading", nil);
+    label.textAlignment = NSTextAlignmentCenter;
+    label.layer.masksToBounds = YES;
+    label.layer.cornerRadius = 20;
+    label.tag = 999;
+    [self.view addSubview:label];
+    self.automaticallyAdjustsScrollViewInsets = YES;
     [self performSelector:@selector(loadSource) withObject:nil afterDelay:0.1];
 }
 
@@ -56,12 +66,17 @@ static NSString *html = nil;
                 [self.webView
                  loadHTMLString:htmlCode
                  baseURL:[NSURL fileURLWithPath:[[self class] htmlRoot] isDirectory:YES]];
+                
+                [self loadFinished];
             });
         });
         
     }
 }
-
+-(void)loadFinished{
+    NSLog(@"load complete");
+    [[self.view viewWithTag:999]removeFromSuperview];
+}
 -(void)loadSource{
     if (self.filePath) {
         self.title = [self.filePath lastPathComponent];
@@ -77,6 +92,10 @@ static NSString *html = nil;
         
         
     }
+}
+-(void)webViewDidFinishLoad:(UIWebView *)webView{
+    NSLog(@"load complete");
+    
 }
 
 @end

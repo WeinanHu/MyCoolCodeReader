@@ -16,6 +16,7 @@ singleton_interface(WHDownloadTool);
 -(void)downloadWithURL:(NSURL*)url;
 -(NSArray*)getProgressList;
 -(void)removeManagerAtIndex:(NSInteger)index;
+
 @property(nonatomic,strong) NSMutableArray *downloadList;
 @property(nonatomic,strong) NSMutableArray *progressArray;
 @property(nonatomic,strong) NSMutableArray *netManagerArray;

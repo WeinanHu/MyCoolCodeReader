@@ -7,7 +7,7 @@
 //
 
 #import "WHFileListTool.h"
-
+#import "ZipArchive.h"
 @implementation WHFileListTool
 static WHFileListTool* fileListTool;
 +(instancetype)shareFileListTool{
@@ -58,8 +58,15 @@ static WHFileListTool* fileListTool;
 //    WHFile *file = [WHFile new];
   
 }
-
-+(void)creatHelloWorld{
+-(void)loadUserInfo{
+    NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
+    if (![user boolForKey:@"didFirstStart"]) {
+        
+        [user setBool:YES forKey:@"didFirstStart"];
+        [self creatHelloWorld];
+    }
+}
+-(void)creatHelloWorld{
     NSString *path = [[NSBundle mainBundle]pathForResource:@"HelloWorld.txt" ofType:nil];
     NSError *error = nil;
     NSString *string = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:&error];
@@ -72,6 +79,10 @@ static WHFileListTool* fileListTool;
         return;
     }
     [string writeToFile:file atomically:YES encoding:NSUTF8StringEncoding error:&error];
+//    [SSZipArchive createZipFileAtPath:[[file stringByDeletingLastPathComponent]stringByAppendingPathComponent:@"HelloWorld.zip"] withContentsOfDirectory:[file stringByDeletingLastPathComponent]];
+//    [SSZipArchive createZipFileAtPath:[DOCUMENT_DIRECTORY stringByAppendingPathComponent:@"HelloWorld.zip"] withContentsOfDirectory:DOCUMENT_DIRECTORY keepParentDirectory:NO withPassword:nil];
+    [SSZipArchive createZipFileAtPath:[DOCUMENT_DIRECTORY stringByAppendingPathComponent:@"HelloWorld.zip"] withFilesAtPaths:@[file]];
+
     if (error) {
         NSLog(@"write error:%@",error.userInfo);
     }

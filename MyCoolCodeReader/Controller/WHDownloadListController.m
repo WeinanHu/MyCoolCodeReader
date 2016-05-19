@@ -73,7 +73,7 @@
     [button addTarget:self action:@selector(cacelDownload:) forControlEvents:UIControlEventTouchUpInside];
     [button setTitleColor:[UIColor colorWithRed:1.000 green:0.520 blue:0.519 alpha:1.000] forState:UIControlStateNormal];
     button.titleLabel.font = [UIFont systemFontOfSize:11];
-    [button setTitle:@"删除" forState:UIControlStateNormal];
+    [button setTitle:NSLocalizedString(@"delete", nil) forState:UIControlStateNormal];
     button.tag = 1000+indexPath.row;
     [cell addSubview:button];
     

@@ -9,6 +9,7 @@
 #import "WHWebViewController.h"
 #import "WHDownloadTool.h"
 #import "WHDownloadListController.h"
+#import "WHWebsiteListController.h"
 @interface WHWebViewController ()<UIAlertViewDelegate,UIPopoverPresentationControllerDelegate>
 @property(nonatomic,strong) NSURL *downloadURL;
 @property(nonatomic,strong) WHDownloadListController *downloadListController;
@@ -19,13 +20,21 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setUpNaviItem];
+    
     // Do any additional setup after loading the view.
+}
+-(void)viewDidAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self.fromController showBackButton];
 }
 -(void)setUpNaviItem{
     UIBarButtonItem *barButton = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"download"] style:UIBarButtonItemStylePlain target:self action:@selector(clickDownloadButton)];
     self.navigationItem.rightBarButtonItem = barButton;
+    self.navigationItem.leftBarButtonItem =[[UIBarButtonItem alloc]initWithTitle:[NSString stringWithFormat:@"<%@",NSLocalizedString(@"back", nil)] style:UIBarButtonItemStylePlain target:self action:@selector(backAction)];
 }
-
+-(void)backAction{
+    [self.navigationController popViewControllerAnimated:YES];
+}
 -(void)clickDownloadButton{
     
 //    if (![WHDownloadTool sharedWHDownloadTool].progressArray.count) {
@@ -72,7 +81,7 @@
     if ([urlStr containsString:@"codeload.github.com/"]&&[urlStr containsString:@"/zip/master"]) {
         self.downloadURL = URL;
         NSLog(@"发现下载链接");
-        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"发现下载链接" message:@"是否下载？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"下载", nil];
+        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"discoverDownload", nil) message:NSLocalizedString(@"downloadFile", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"no", nil) otherButtonTitles:NSLocalizedString(@"yes", nil), nil];
         [[UIApplication sharedApplication].keyWindow addSubview:alertView];
         [alertView show];
         
@@ -82,7 +91,8 @@
         NSString *completeSourceStr = [NSString stringWithFormat:@"https://codeload.github.com/%@/zip/master",sourceStr];
         NSString *info =[NSString stringWithFormat:@"获取到%@",sourceStr.lastPathComponent];
         self.downloadURL = [NSURL URLWithString:completeSourceStr];
-        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:info message:@"是否下载？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"下载", nil];
+        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"discoverDownload", nil) message:NSLocalizedString(@"downloadFile", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"no", nil) otherButtonTitles:NSLocalizedString(@"yes", nil), nil];
+
         [[UIApplication sharedApplication].keyWindow addSubview:alertView];
         [alertView show];
     }

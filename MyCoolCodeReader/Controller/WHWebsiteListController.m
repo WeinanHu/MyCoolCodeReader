@@ -10,13 +10,15 @@
 #import "WHWebViewController.h"
 @interface WHWebsiteListController ()
 @property(nonatomic,strong) NSArray *websArray;
+@property(nonatomic,strong) WHWebViewController *webController;
 @end
 
 @implementation WHWebsiteListController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    self.navigationItem.title = NSLocalizedString(@"downloadFromWeb", nil);
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"myFile", nil) style:UIBarButtonItemStylePlain target:self action:@selector(goToMyfiles)];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -28,7 +30,9 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
+-(void)goToMyfiles{
+    self.tabBarController.selectedIndex = 0;
+}
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -52,12 +56,21 @@
     return cell;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    WHWebViewController *webViewController = [[WHWebViewController alloc]init];
-    webViewController.URL = [NSURL URLWithString:self.websArray[indexPath.row]];
-    webViewController.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:webViewController animated:YES];
+    self.webController = [[WHWebViewController alloc]init];
+    self.webController.URL = [NSURL URLWithString:self.websArray[indexPath.row]];
+    self.webController.hidesBottomBarWhenPushed = YES;
+    self.webController.fromController = self;
+    [self.navigationController pushViewController:self.webController animated:YES];
 }
-
+-(void)showBackButton{
+    if (self.navigationItem.rightBarButtonItem) {
+        return;
+    }
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:[NSString stringWithFormat:@"%@>",NSLocalizedString(@"back", nil)] style:UIBarButtonItemStylePlain target:self action:@selector(backToWeb)];
+}
+-(void)backToWeb{
+    [self.navigationController pushViewController:self.webController animated:YES];
+}
 /*
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -104,7 +117,7 @@
 
 - (NSArray *)websArray {
 	if(_websArray == nil) {
-		_websArray = @[@"https://github.com",@"https://codeload.github.com/WeinanHu/2048/zip/master",@"https://codeload.github.com/WeinanHu/WHMusic/zip/master",@"https://codeload.github.com/AFNetworking/AFNetworking/zip/master",@"https://github.com/search"];
+		_websArray = @[@"https://github.com",@"https://github.com/search"];
 	}
 	return _websArray;
 }

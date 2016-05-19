@@ -7,7 +7,7 @@
 //
 
 #import "PBWebViewController.h"
-
+#import "WHWebsiteListController.h"
 @interface WHWebViewController : PBWebViewController
-
+@property(nonatomic,strong) WHWebsiteListController *fromController;
 @end
