@@ -53,6 +53,8 @@
 		B0E44AA41CE9DB8A003EBC83 /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B0E44A9B1CE9DB8A003EBC83 /* AFURLSessionManager.m */; };
 		B0E44AAA1CE9EE6D003EBC83 /* WHWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0E44AA91CE9EE6D003EBC83 /* WHWebViewController.m */; };
 		B0E44AAD1CE9F40B003EBC83 /* WHDownloadTool.m in Sources */ = {isa = PBXBuildFile; fileRef = B0E44AAC1CE9F40B003EBC83 /* WHDownloadTool.m */; };
+		B0F466BB1CEF45C400FC2457 /* WHDrawViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0F466B91CEF45C400FC2457 /* WHDrawViewController.m */; };
+		B0F466BC1CEF45C400FC2457 /* WHDrawViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B0F466BA1CEF45C400FC2457 /* WHDrawViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -153,6 +155,9 @@
 		B0E44AAB1CE9F40B003EBC83 /* WHDownloadTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WHDownloadTool.h; sourceTree = "<group>"; };
 		B0E44AAC1CE9F40B003EBC83 /* WHDownloadTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WHDownloadTool.m; sourceTree = "<group>"; };
 		B0E44AAE1CE9F42B003EBC83 /* Singleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Singleton.h; sourceTree = "<group>"; };
+		B0F466B81CEF45C400FC2457 /* WHDrawViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WHDrawViewController.h; sourceTree = "<group>"; };
+		B0F466B91CEF45C400FC2457 /* WHDrawViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WHDrawViewController.m; sourceTree = "<group>"; };
+		B0F466BA1CEF45C400FC2457 /* WHDrawViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WHDrawViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -238,6 +243,9 @@
 				B0E44AA91CE9EE6D003EBC83 /* WHWebViewController.m */,
 				B0C556651CEC3E8D002D1996 /* WHDownloadListController.h */,
 				B0C556661CEC3E8D002D1996 /* WHDownloadListController.m */,
+				B0F466B81CEF45C400FC2457 /* WHDrawViewController.h */,
+				B0F466B91CEF45C400FC2457 /* WHDrawViewController.m */,
+				B0F466BA1CEF45C400FC2457 /* WHDrawViewController.xib */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -460,6 +468,7 @@
 				B0B33A421CEDEC64005C65F7 /* Localizable.strings in Resources */,
 				B0E44A3C1CE98BF0003EBC83 /* html in Resources */,
 				B0B33A3B1CED8DB4005C65F7 /* MBProgressHUD.bundle in Resources */,
+				B0F466BC1CEF45C400FC2457 /* WHDrawViewController.xib in Resources */,
 				B0E44A401CE99208003EBC83 /* HelloWorld.txt in Resources */,
 				B0B33A3E1CEDB368005C65F7 /* Assets.xcassets in Resources */,
 			);
@@ -489,6 +498,7 @@
 				B0C556671CEC3E8D002D1996 /* WHDownloadListController.m in Sources */,
 				B0C5566A1CEC4478002D1996 /* WHDownloadFile.m in Sources */,
 				B0E44A9E1CE9DB8A003EBC83 /* AFHTTPSessionManager.m in Sources */,
+				B0F466BB1CEF45C400FC2457 /* WHDrawViewController.m in Sources */,
 				B0B33A2C1CED6CC0005C65F7 /* prng.c in Sources */,
 				B0B33A281CED6CC0005C65F7 /* aestab.c in Sources */,
 				B0E44AAA1CE9EE6D003EBC83 /* WHWebViewController.m in Sources */,
