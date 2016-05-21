@@ -7,13 +7,14 @@
 //
 
 #import "WHDrawViewController.h"
+#import "MBProgressHUD+KR.h"
 typedef enum{
     NONE,
     RED_TYPE,
     GREEN_TYPE,
     YELLOW_TYPE
 }DRAW_TYPE;
-@interface WHDrawViewController ()<UITextViewDelegate>
+@interface WHDrawViewController ()<UITextViewDelegate,UIGestureRecognizerDelegate>
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *topConstraint;
 @property (weak, nonatomic) IBOutlet UIView *buttonContainerView;
 @property (weak, nonatomic) IBOutlet UIButton *redButton;
@@ -27,11 +28,16 @@ typedef enum{
 @property(nonatomic,assign) CGPoint endPoint;
 @property(nonatomic,strong) UIButton *selectedButton;
 @property(nonatomic,strong) ArrowView *arrowView;
-@property(nonatomic,strong) NSArray *arrowViewArray;
+@property(nonatomic,strong) NSMutableArray *arrowViewArray;
+@property(nonatomic,strong) NSMutableArray *tapViewArray;
 @property(nonatomic,strong) UITextView *textView;
 @property(nonatomic,strong) CaseView *caseView;
 @property(nonatomic,assign) CGFloat angle;
-
+@property(nonatomic,assign) CGPoint deletePanStartPoint;
+@property(nonatomic,assign) CGPoint deletePanEndPoint;
+@property(nonatomic,assign) NSInteger currentTapIndex;
+@property(nonatomic,strong) NSTimer *blinkTimer;
+@property(nonatomic,strong) UIView *blinkView;
 @end
 
 @implementation WHDrawViewController
@@ -70,7 +76,11 @@ typedef enum{
 //如果要保存到相册:
 - (void)saveScreenshotToPhotosAlbum:(UIView *)view
 {
+    [self.view endEditing:YES];
+    [self.buttonContainerView setHidden:YES];
     UIImageWriteToSavedPhotosAlbum([self captureView:view], nil, nil, nil);
+    [MBProgressHUD showSuccess:NSLocalizedString(@"saveSuccess", nil) toView:self.view];
+    [self.buttonContainerView setHidden:NO];
 }
 #pragma mark - view
 -(void)viewWillAppear:(BOOL)animated{
@@ -78,15 +88,20 @@ typedef enum{
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(openKeyboard:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(closeKeyboard:) name:UIKeyboardWillHideNotification object:nil];
     
-    
+    [self.selectedButton addObserver:self forKeyPath:@"layer" options:NSKeyValueObservingOptionNew context:nil];
 }
+
+
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+    [self.selectedButton removeObserver:self forKeyPath:@"layer"];
+}
+-(void)viewDidLayoutSubviews{
+    NSLog(@"rect selectedButton:%@",NSStringFromCGRect(self.selectedButton.frame));
     
 }
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     if (self.bkgImageView) {
@@ -94,28 +109,43 @@ typedef enum{
     }
     if (self.navigationController) {
         self.navigationController.navigationBarHidden=YES;
-        [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTap)]];
+        UITapGestureRecognizer *tapGesture =[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTap)];
+        tapGesture.delegate = self;
+        [self.view addGestureRecognizer:tapGesture];
+        
     }
     [self.buttonContainerView addGestureRecognizer:[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTapTopContainer)]];
     
     self.drawType = RED_TYPE;
+    
     [self addButtonCaseToButton:self.redButton];
+    
     UIPanGestureRecognizer *panGesture = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(didPanGesture:)];
     
     [self.view addGestureRecognizer:panGesture];
     // Do any additional setup after loading the view.
 }
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context{
+    if ([keyPath isEqualToString:@"layer"]) {
+        self.buttonCase.center = self.selectedButton.center;
+    }
+}
 -(void)didPanGesture:(UIPanGestureRecognizer*)sender{
     CGPoint point = [sender locationInView:self.view];
     if (sender.state == UIGestureRecognizerStateBegan) {
+        if ([self.textView isFirstResponder]) {
+            [self.textView resignFirstResponder];
+        }
         NSLog(@"began:%@",NSStringFromCGPoint(point));
+//        [self.caseView removeFromSuperview];
         self.startPoint = point;
+        
     }else{
         NSLog(@"%@",NSStringFromCGPoint(point));
         if (self.drawType!=NONE) {
             //画箭头
             [self.arrowView removeFromSuperview];
-            [self.caseView removeFromSuperview];
+            
             self.arrowView = [[ArrowView alloc]initWithFrame:self.view.bounds startPoint:self.startPoint endPoint:point withColor:self.selectedButton.backgroundColor];
             self.arrowView.backgroundColor = [UIColor clearColor];
             [self.view insertSubview:self.arrowView belowSubview:self.buttonContainerView];
@@ -129,7 +159,7 @@ typedef enum{
     }
 
 }
--(void)createCaseViewWithArrowStartPoint:(CGPoint)startPoint endPoint:(CGPoint)endPoint inView:(UIView*)view{
+-(CGFloat)getAngleFromStartPoint:(CGPoint)startPoint endPoint:(CGPoint)endPoint{
     CGFloat angle;
     if (endPoint.x == startPoint.x) {
         angle = endPoint.y>startPoint.y?(M_PI/2):(M_PI*3/2);
@@ -138,6 +168,10 @@ typedef enum{
     }else{
         angle = atan((endPoint.y-startPoint.y)/(endPoint.x-startPoint.x))+M_PI;
     }
+    return angle;
+}
+-(void)createCaseViewWithArrowStartPoint:(CGPoint)startPoint endPoint:(CGPoint)endPoint inView:(UIView*)view{
+    CGFloat angle = [self getAngleFromStartPoint:startPoint endPoint:endPoint];
     self.angle = angle;
     CGPoint point;
     CGSize size;
@@ -158,7 +192,7 @@ typedef enum{
         point = CGPointMake(endPoint.x-size.width/2, endPoint.y-size.height);
     }
     
-    [self.caseView removeFromSuperview];
+//    [self.caseView removeFromSuperview];
     
     self.caseView = [[CaseView alloc]initWithFrame:CGRectMake(point.x, point.y, size.width, size.height) withColor:self.selectedButton.backgroundColor];
     self.textView.frame = self.caseView.bounds;
@@ -167,6 +201,8 @@ typedef enum{
     self.textView.backgroundColor = [UIColor clearColor];
     [self.textView becomeFirstResponder];
     self.textView.delegate = self;
+    self.textView.tag = 1235;
+    self.caseView.tag = 123;
     self.textView.autocorrectionType = UITextAutocorrectionTypeNo;
     [self.caseView addSubview:self.textView];
     [self.arrowView addSubview:self.caseView];
@@ -207,6 +243,9 @@ typedef enum{
     self.drawType = NONE;
 }
 #pragma mark - button
+- (IBAction)clickSaveButton:(UIButton*)sender{
+    [self saveScreenshotToPhotosAlbum:self.view];
+}
 - (IBAction)clickRedButton:(UIButton*)sender {
     [self addButtonCaseToButton:sender];
     self.drawType = RED_TYPE;
@@ -231,7 +270,7 @@ typedef enum{
     // Dispose of any resources that can be recreated.
 }
 
-
+#pragma mark - UITextViewDelegate
 -(void)textViewDidChange:(UITextView *)textView{
     NSLog(@"eee");
     
@@ -256,6 +295,148 @@ typedef enum{
 }
 -(void)textViewDidEndEditing:(UITextView *)textView{
     NSLog(@"endEdit");
+    if (self.arrowViewArray.count==0) {
+        self.currentTapIndex = 0;
+    }
+//    ArrowView *arrowView = self.arrowViewArray[self.currentTapIndex];
+    if ([self.arrowViewArray containsObject:self.arrowView]||self.arrowView ==nil) {
+
+    }else{
+        [self.arrowViewArray addObject:self.arrowView];
+        self.arrowView = nil;
+    }
+    
+    
+        UIView *view = [[UIView alloc]initWithFrame:textView.superview.frame];
+        view.backgroundColor = [UIColor clearColor];
+        [self.view insertSubview:view aboveSubview:self.buttonContainerView];
+        UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapCaseView:)];
+        //        tapGesture.delegate = self;
+        [view addGestureRecognizer:tapGesture];
+        UILongPressGestureRecognizer *longPressGesture = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(longPressCaseView:)];
+        //        longPressGesture.delegate = self;
+        [view addGestureRecognizer:longPressGesture];
+        NSLog(@"%ld",view.tag);
+        [self.tapViewArray insertObject:view atIndex:self.currentTapIndex];
+    
+    self.currentTapIndex = self.arrowViewArray.count;
+}
+
+-(void)tapCaseView:(UITapGestureRecognizer*)sender{
+    [self.view endEditing:YES];
+    for (int i=0 ; i <self.tapViewArray.count; i++) {
+        UIView *view = self.tapViewArray[i];
+        if (sender.view == view) {
+            self.currentTapIndex = i;
+            break;
+        }
+    }
+    ArrowView *arrowView=self.arrowViewArray[self.currentTapIndex];
+    
+    NSLog(@"%@:%ld",sender.view,sender.view.tag);
+//    self.caseView = sender.view.superview;
+    self.textView = [arrowView viewWithTag:1235];
+    [self.textView becomeFirstResponder];
+    [sender.view removeFromSuperview];
+    [self.tapViewArray removeObject:sender.view];
+}
+-(void)longPressCaseView:(UILongPressGestureRecognizer*)sender{
+    [self.view endEditing:YES];
+    CGPoint point = [sender locationInView:self.view];
+    NSLog(@"%@",NSStringFromCGPoint(point));
+    NSInteger oldIndex = self.currentTapIndex;
+    for (int i=0 ; i <self.tapViewArray.count; i++) {
+        UIView *view = self.tapViewArray[i];
+        if (sender.view == view) {
+            self.currentTapIndex = i;
+            break;
+        }
+    }
+    if (sender.state == UIGestureRecognizerStateBegan) {
+        self.deletePanStartPoint = point;
+        [self startBlinkWith:self.arrowViewArray[self.currentTapIndex]];
+    }else if(sender.state == UIGestureRecognizerStateEnded){
+        [self.blinkTimer invalidate];
+        self.blinkTimer = nil;
+        self.blinkView.alpha = 1;
+        self.deletePanEndPoint = point;
+        ArrowView *arrowView=self.arrowViewArray[self.currentTapIndex];
+        if ([self getDistanceFromStartPoint:self.deletePanStartPoint toEndPoint:self.deletePanEndPoint]>50) {
+            
+            [self deleteArrowView:arrowView];
+            oldIndex--;
+        }
+    }
+    self.currentTapIndex = oldIndex;
+}
+-(void)dealloc{
+    if (self.blinkTimer) {
+        [self.blinkTimer invalidate];
+        self.blinkTimer = nil;
+    }
+    
+}
+
+-(void)startBlinkWith:(UIView*)view{
+    if (self.blinkTimer) {
+        [self.blinkTimer invalidate];
+    }
+    self.blinkView = view;
+    self.blinkTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(doBlinkAnimation) userInfo:nil repeats:YES];
+    [self.blinkTimer fire];
+}
+-(void)doBlinkAnimation{
+    UIView *view = self.blinkView;
+    [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+        view.alpha=0.5;
+    } completion:^(BOOL finished) {
+       dispatch_async(dispatch_get_main_queue(), ^{
+          [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+              view.alpha = 1;
+          } completion:^(BOOL finished) {
+              
+          }];
+       });
+    }];
+}
+-(CGFloat)getDistanceFromStartPoint:(CGPoint)startPoint toEndPoint:(CGPoint)endPoint{
+    CGFloat angle = [self getAngleFromStartPoint:startPoint endPoint:endPoint];
+    if (cos(angle)) {
+        return abs((int)((endPoint.x-startPoint.x)/cos(angle)));
+    }else {
+        
+        return abs((int)((endPoint.y-startPoint.y)));
+    }
+}
+-(void)deleteArrowView:(UIView*)view{
+    CGFloat transformX;
+    CGFloat transformY;
+    CGFloat angle = [self getAngleFromStartPoint:self.deletePanStartPoint endPoint:self.deletePanEndPoint];
+    if (self.deletePanEndPoint.x>self.deletePanStartPoint.x) {
+        transformX = self.view.frame.size.width - self.deletePanStartPoint.x;
+        
+    }else{
+        transformX = -self.deletePanStartPoint.x;
+        
+    }
+    transformY = transformX * tan(angle);
+//    view.layer.anchorPoint = [view viewWithTag:1235].superview.center;
+    NSLog(@"%@",NSStringFromCGPoint(view.layer.anchorPoint));
+    [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+        view.transform = CGAffineTransformMakeTranslation(transformX,transformY);
+    } completion:^(BOOL finished) {
+        [view removeFromSuperview];
+        if([self.arrowViewArray containsObject:view]){
+            for (int i=0; i<self.arrowViewArray.count; i++) {
+                UIView *viewIn = self.arrowViewArray[i];
+                if (view == viewIn) {
+                    [self.tapViewArray removeObject:self.tapViewArray[i]];
+                }
+            }
+            [self.arrowViewArray removeObject:view];
+
+        }
+    }];
 }
 #pragma mark - keyboard
 -(void)openKeyboard:(NSNotification*)notification{
@@ -313,8 +494,21 @@ typedef enum{
     }
     return _buttonCase;
 }
-
+- (NSMutableArray *)arrowViewArray {
+    if(_arrowViewArray == nil) {
+        _arrowViewArray = [[NSMutableArray alloc] init];
+    }
+    return _arrowViewArray;
+}
+- (NSMutableArray *)tapViewArray {
+    if(_tapViewArray == nil) {
+        _tapViewArray = [[NSMutableArray alloc] init];
+    }
+    return _tapViewArray;
+}
 @end
+
+
 @interface ArrowView()
 @property(nonatomic,assign) CGPoint startPoint;
 @property(nonatomic,assign) CGPoint endPoint;
@@ -409,5 +603,9 @@ typedef enum{
     
     [path stroke];
 }
+
+
+
+
 
 @end

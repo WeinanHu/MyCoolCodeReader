@@ -25,7 +25,9 @@
     
     [self setUpTableView];
     [self setUpNavigation];
-    [self setUpButtons];
+    if(self.index >0){
+        [self setUpButtons];
+    }
     // Do any additional setup after loading the view.
 }
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context{
@@ -65,7 +67,10 @@
 
 -(void)setUpButtons{
     NSString *upStr = NSLocalizedString(@"folderUp", nil);
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:upStr style:UIBarButtonItemStylePlain target:self action:@selector(upFolder)];
+    UIBarButtonItem *barButton =[[UIBarButtonItem alloc]initWithTitle:upStr style:UIBarButtonItemStylePlain target:self action:@selector(upFolder)];
+    [barButton setTitleTextAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:26]} forState:UIControlStateNormal];
+    self.navigationItem.leftBarButtonItem = barButton;
+    
 //    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"Edit" style:UIBarButtonItemStylePlain target:self action:@selector(editFile)];
     
 }

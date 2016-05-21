@@ -5,7 +5,7 @@
   Created by Wayne on 16/5/19.
   Copyright © 2016年 WayneHu. All rights reserved.
 */
-"folderUp" = "向上";
+"folderUp" = "←";
 "myFile" = "我的文件";
 "webDownload" = "网络下载";
 "back" = "返回";
@@ -19,3 +19,5 @@
 "loading" = "加载";
 "discoverDownload" = "发现下载链接";
 "downloadFile" = "是否下载文件?";
+"screenShot" = "截图";
+"saveSuccess" = "成功保存至相册";

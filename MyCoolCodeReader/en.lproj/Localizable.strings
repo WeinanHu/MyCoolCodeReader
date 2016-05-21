@@ -5,7 +5,7 @@
   Created by Wayne on 16/5/19.
   Copyright © 2016年 WayneHu. All rights reserved.
 */
-"folderUp" = "Up";
+"folderUp" = "←";
 "myFile" = "My File";
 "webDownload" = "Web Download";
 "back" = "back";
@@ -19,3 +19,5 @@
 "loading" = "loading";
 "discoverDownload" = "Discover Download";
 "downloadFile" = "Download File?";
+"screenShot" = "Screen Shot";
+"saveSuccess" = "Success Save To Album";

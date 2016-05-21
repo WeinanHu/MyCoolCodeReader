@@ -7,7 +7,7 @@
 //
 
 #import "SourceViewController.h"
-
+#import "WHDrawViewController.h"
 static NSString *html = nil;
 
 @interface SourceViewController ()<UIWebViewDelegate>
@@ -41,6 +41,7 @@ static NSString *html = nil;
 {
     [super viewDidLoad];
     //CGSize screenSize = [UIScreen mainScreen].bounds.size;
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"screenShot", nil) style:UIBarButtonItemStylePlain target:self action:@selector(startScreenShot)];
     UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 150, 100)];
     label.center = self.view.center;
     label.backgroundColor = [UIColor colorWithWhite:0.841 alpha:0.720];
@@ -52,8 +53,12 @@ static NSString *html = nil;
     [self.view addSubview:label];
     self.automaticallyAdjustsScrollViewInsets = YES;
     [self performSelector:@selector(loadSource) withObject:nil afterDelay:0.1];
+    
 }
-
+-(void)startScreenShot{
+    WHDrawViewController * drawController = [[WHDrawViewController alloc]initWithNibName:@"WHDrawViewController" bundle:nil withBkgView:self.view];
+    [self.navigationController pushViewController:drawController animated:YES];
+}
 -(void)loadCode:(NSString *)code{
     if (code) {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
