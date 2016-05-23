@@ -5,13 +5,14 @@
   Created by Wayne on 16/5/19.
   Copyright © 2016年 WayneHu. All rights reserved.
 */
-"folderUp" = "←";
+"folderUp" = "返回";
 "myFile" = "我的文件";
 "webDownload" = "网络下载";
 "back" = "返回";
 "downloadFromWeb" = "从网络下载";
 "unZip" = "解压";
 "unZipTheFile" = "解压文件?";
+"unZipFinished" = "解压成功";
 "yes" = "是";
 "no" = "否";
 "yesAndCreateFolder" = "是并创建文件夹";
@@ -19,5 +20,6 @@
 "loading" = "加载";
 "discoverDownload" = "发现下载链接";
 "downloadFile" = "是否下载文件?";
-"screenShot" = "截图";
+"downloadFinished" = "下载完成";
+"screenShot" = "截图笔记";
 "saveSuccess" = "成功保存至相册";

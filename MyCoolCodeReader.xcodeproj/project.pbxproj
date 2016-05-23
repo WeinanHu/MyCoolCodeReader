@@ -12,7 +12,6 @@
 		B0AB63821CE71149000C3BEA /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B0AB63811CE71149000C3BEA /* AppDelegate.m */; };
 		B0AB638D1CE71149000C3BEA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B0AB638B1CE71149000C3BEA /* LaunchScreen.storyboard */; };
 		B0AB639F1CE717DD000C3BEA /* WHFileListController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0AB639E1CE717DD000C3BEA /* WHFileListController.m */; };
-		B0AB63A21CE71C27000C3BEA /* WHFileListTool.m in Sources */ = {isa = PBXBuildFile; fileRef = B0AB63A11CE71C27000C3BEA /* WHFileListTool.m */; };
 		B0AB63A51CE71C3A000C3BEA /* WHFile.m in Sources */ = {isa = PBXBuildFile; fileRef = B0AB63A41CE71C3A000C3BEA /* WHFile.m */; };
 		B0B338D61CED63CC005C65F7 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = B0B338D51CED63CC005C65F7 /* libz.tbd */; };
 		B0B33A261CED6CC0005C65F7 /* aescrypt.c in Sources */ = {isa = PBXBuildFile; fileRef = B0B33A051CED6CC0005C65F7 /* aescrypt.c */; };
@@ -37,6 +36,9 @@
 		B0B33A491CEDED20005C65F7 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B0B33A4B1CEDED20005C65F7 /* InfoPlist.strings */; };
 		B0C556671CEC3E8D002D1996 /* WHDownloadListController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0C556661CEC3E8D002D1996 /* WHDownloadListController.m */; };
 		B0C5566A1CEC4478002D1996 /* WHDownloadFile.m in Sources */ = {isa = PBXBuildFile; fileRef = B0C556691CEC4478002D1996 /* WHDownloadFile.m */; };
+		B0C97DA81CF3304400866A69 /* WHHelpView.m in Sources */ = {isa = PBXBuildFile; fileRef = B0C97DA71CF3304400866A69 /* WHHelpView.m */; };
+		B0C97DAD1CF3307A00866A69 /* WHDownloadTool.m in Sources */ = {isa = PBXBuildFile; fileRef = B0C97DAA1CF3307A00866A69 /* WHDownloadTool.m */; };
+		B0C97DAE1CF3307A00866A69 /* WHFileListTool.m in Sources */ = {isa = PBXBuildFile; fileRef = B0C97DAC1CF3307A00866A69 /* WHFileListTool.m */; };
 		B0E44A3A1CE987DF003EBC83 /* SourceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0E44A391CE987DF003EBC83 /* SourceViewController.m */; };
 		B0E44A3C1CE98BF0003EBC83 /* html in Resources */ = {isa = PBXBuildFile; fileRef = B0E44A3B1CE98BF0003EBC83 /* html */; };
 		B0E44A401CE99208003EBC83 /* HelloWorld.txt in Resources */ = {isa = PBXBuildFile; fileRef = B0E44A3F1CE99208003EBC83 /* HelloWorld.txt */; };
@@ -52,7 +54,6 @@
 		B0E44AA31CE9DB8A003EBC83 /* AFURLResponseSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = B0E44A991CE9DB8A003EBC83 /* AFURLResponseSerialization.m */; };
 		B0E44AA41CE9DB8A003EBC83 /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B0E44A9B1CE9DB8A003EBC83 /* AFURLSessionManager.m */; };
 		B0E44AAA1CE9EE6D003EBC83 /* WHWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0E44AA91CE9EE6D003EBC83 /* WHWebViewController.m */; };
-		B0E44AAD1CE9F40B003EBC83 /* WHDownloadTool.m in Sources */ = {isa = PBXBuildFile; fileRef = B0E44AAC1CE9F40B003EBC83 /* WHDownloadTool.m */; };
 		B0F466BB1CEF45C400FC2457 /* WHDrawViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0F466B91CEF45C400FC2457 /* WHDrawViewController.m */; };
 		B0F466BC1CEF45C400FC2457 /* WHDrawViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B0F466BA1CEF45C400FC2457 /* WHDrawViewController.xib */; };
 /* End PBXBuildFile section */
@@ -69,8 +70,6 @@
 		B0AB638E1CE71149000C3BEA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B0AB639D1CE717DD000C3BEA /* WHFileListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WHFileListController.h; sourceTree = "<group>"; };
 		B0AB639E1CE717DD000C3BEA /* WHFileListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WHFileListController.m; sourceTree = "<group>"; };
-		B0AB63A01CE71C27000C3BEA /* WHFileListTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WHFileListTool.h; sourceTree = "<group>"; };
-		B0AB63A11CE71C27000C3BEA /* WHFileListTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WHFileListTool.m; sourceTree = "<group>"; };
 		B0AB63A31CE71C3A000C3BEA /* WHFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WHFile.h; sourceTree = "<group>"; };
 		B0AB63A41CE71C3A000C3BEA /* WHFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WHFile.m; sourceTree = "<group>"; };
 		B0B338D51CED63CC005C65F7 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
@@ -123,6 +122,12 @@
 		B0C556661CEC3E8D002D1996 /* WHDownloadListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WHDownloadListController.m; sourceTree = "<group>"; };
 		B0C556681CEC4478002D1996 /* WHDownloadFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WHDownloadFile.h; sourceTree = "<group>"; };
 		B0C556691CEC4478002D1996 /* WHDownloadFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WHDownloadFile.m; sourceTree = "<group>"; };
+		B0C97DA61CF3304400866A69 /* WHHelpView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WHHelpView.h; sourceTree = "<group>"; };
+		B0C97DA71CF3304400866A69 /* WHHelpView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WHHelpView.m; sourceTree = "<group>"; };
+		B0C97DA91CF3307A00866A69 /* WHDownloadTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WHDownloadTool.h; sourceTree = "<group>"; };
+		B0C97DAA1CF3307A00866A69 /* WHDownloadTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WHDownloadTool.m; sourceTree = "<group>"; };
+		B0C97DAB1CF3307A00866A69 /* WHFileListTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WHFileListTool.h; sourceTree = "<group>"; };
+		B0C97DAC1CF3307A00866A69 /* WHFileListTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WHFileListTool.m; sourceTree = "<group>"; };
 		B0E44A381CE987DF003EBC83 /* SourceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SourceViewController.h; sourceTree = "<group>"; };
 		B0E44A391CE987DF003EBC83 /* SourceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SourceViewController.m; sourceTree = "<group>"; };
 		B0E44A3B1CE98BF0003EBC83 /* html */ = {isa = PBXFileReference; lastKnownFileType = folder; name = html; path = MyCoolCodeReader/html; sourceTree = SOURCE_ROOT; };
@@ -152,8 +157,6 @@
 		B0E44A9B1CE9DB8A003EBC83 /* AFURLSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLSessionManager.m; sourceTree = "<group>"; };
 		B0E44AA81CE9EE6D003EBC83 /* WHWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WHWebViewController.h; sourceTree = "<group>"; };
 		B0E44AA91CE9EE6D003EBC83 /* WHWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WHWebViewController.m; sourceTree = "<group>"; };
-		B0E44AAB1CE9F40B003EBC83 /* WHDownloadTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WHDownloadTool.h; sourceTree = "<group>"; };
-		B0E44AAC1CE9F40B003EBC83 /* WHDownloadTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WHDownloadTool.m; sourceTree = "<group>"; };
 		B0E44AAE1CE9F42B003EBC83 /* Singleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Singleton.h; sourceTree = "<group>"; };
 		B0F466B81CEF45C400FC2457 /* WHDrawViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WHDrawViewController.h; sourceTree = "<group>"; };
 		B0F466B91CEF45C400FC2457 /* WHDrawViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WHDrawViewController.m; sourceTree = "<group>"; };
@@ -265,14 +268,10 @@
 		B0AB63961CE71716000C3BEA /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				B0AB63A01CE71C27000C3BEA /* WHFileListTool.h */,
-				B0AB63A11CE71C27000C3BEA /* WHFileListTool.m */,
 				B0AB63A31CE71C3A000C3BEA /* WHFile.h */,
 				B0AB63A41CE71C3A000C3BEA /* WHFile.m */,
 				B0C556681CEC4478002D1996 /* WHDownloadFile.h */,
 				B0C556691CEC4478002D1996 /* WHDownloadFile.m */,
-				B0E44AAB1CE9F40B003EBC83 /* WHDownloadTool.h */,
-				B0E44AAC1CE9F40B003EBC83 /* WHDownloadTool.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -288,6 +287,10 @@
 		B0AB63981CE71716000C3BEA /* Utility */ = {
 			isa = PBXGroup;
 			children = (
+				B0C97DA91CF3307A00866A69 /* WHDownloadTool.h */,
+				B0C97DAA1CF3307A00866A69 /* WHDownloadTool.m */,
+				B0C97DAB1CF3307A00866A69 /* WHFileListTool.h */,
+				B0C97DAC1CF3307A00866A69 /* WHFileListTool.m */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -295,6 +298,8 @@
 		B0AB63991CE71716000C3BEA /* View */ = {
 			isa = PBXGroup;
 			children = (
+				B0C97DA61CF3304400866A69 /* WHHelpView.h */,
+				B0C97DA71CF3304400866A69 /* WHHelpView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -483,14 +488,15 @@
 			files = (
 				B0E44AA41CE9DB8A003EBC83 /* AFURLSessionManager.m in Sources */,
 				B0E44AA11CE9DB8A003EBC83 /* AFURLConnectionOperation.m in Sources */,
+				B0C97DAD1CF3307A00866A69 /* WHDownloadTool.m in Sources */,
 				B0E44A9C1CE9DB8A003EBC83 /* AFHTTPRequestOperation.m in Sources */,
 				B0B33A271CED6CC0005C65F7 /* aeskey.c in Sources */,
-				B0AB63A21CE71C27000C3BEA /* WHFileListTool.m in Sources */,
 				B0B33A301CED6CC0005C65F7 /* mztools.c in Sources */,
 				B0B33A291CED6CC0005C65F7 /* entropy.c in Sources */,
 				B0B33A3C1CED8DB4005C65F7 /* MBProgressHUD.m in Sources */,
 				B0E44A9D1CE9DB8A003EBC83 /* AFHTTPRequestOperationManager.m in Sources */,
 				B0E44A841CE9B4DF003EBC83 /* PBWebViewController.m in Sources */,
+				B0C97DA81CF3304400866A69 /* WHHelpView.m in Sources */,
 				B0B33A3A1CED8DB4005C65F7 /* MBProgressHUD+KR.m in Sources */,
 				B0B33A2B1CED6CC0005C65F7 /* hmac.c in Sources */,
 				B0AB63821CE71149000C3BEA /* AppDelegate.m in Sources */,
@@ -507,8 +513,8 @@
 				B0B33A331CED6CC0005C65F7 /* SSZipArchive.m in Sources */,
 				B0AB63A51CE71C3A000C3BEA /* WHFile.m in Sources */,
 				B0AB639F1CE717DD000C3BEA /* WHFileListController.m in Sources */,
-				B0E44AAD1CE9F40B003EBC83 /* WHDownloadTool.m in Sources */,
 				B0AB637F1CE71149000C3BEA /* main.m in Sources */,
+				B0C97DAE1CF3307A00866A69 /* WHFileListTool.m in Sources */,
 				B0E44AA01CE9DB8A003EBC83 /* AFSecurityPolicy.m in Sources */,
 				B0B33A261CED6CC0005C65F7 /* aescrypt.c in Sources */,
 				B0E44A871CE9BACD003EBC83 /* WHWebsiteListController.m in Sources */,
@@ -592,7 +598,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -630,7 +636,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -642,6 +648,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = MyCoolCodeReader/PrefixHeader.pch;
 				INFOPLIST_FILE = MyCoolCodeReader/Info.plist;
@@ -656,6 +663,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = MyCoolCodeReader/PrefixHeader.pch;
 				INFOPLIST_FILE = MyCoolCodeReader/Info.plist;

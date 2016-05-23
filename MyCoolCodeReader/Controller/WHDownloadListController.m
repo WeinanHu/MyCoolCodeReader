@@ -85,10 +85,13 @@
             cell.detailTextLabel.text = @"准备下载";
             break;
         case IS_DOWNLOADING:
+            if (progress.totalUnitCount<0&&progress.completedUnitCount>0) {
+                progress.totalUnitCount = progress.completedUnitCount*2;
+            }
             cell.detailTextLabel.text = [NSString stringWithFormat:@"%g%%",progress.fractionCompleted*100];
             break;
         case FINISH_DOWNLOAD:
-            cell.detailTextLabel.text = [NSString stringWithFormat:@"下载完成"];
+            cell.detailTextLabel.text = [NSString stringWithFormat:@"%@",NSLocalizedString(@"downloadFinished", nil)];
     }
     return cell;
 }

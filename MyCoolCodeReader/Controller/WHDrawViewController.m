@@ -88,7 +88,7 @@ typedef enum{
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(openKeyboard:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(closeKeyboard:) name:UIKeyboardWillHideNotification object:nil];
     
-    [self.selectedButton addObserver:self forKeyPath:@"layer" options:NSKeyValueObservingOptionNew context:nil];
+    [self addObserver:self forKeyPath:@"selectedButton.layer.position" options:NSKeyValueObservingOptionNew context:nil];
 }
 
 
@@ -96,7 +96,8 @@ typedef enum{
     [super viewWillDisappear:animated];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
-    [self.selectedButton removeObserver:self forKeyPath:@"layer"];
+
+    [self removeObserver:self forKeyPath:@"selectedButton.layer.position"];
 }
 -(void)viewDidLayoutSubviews{
     NSLog(@"rect selectedButton:%@",NSStringFromCGRect(self.selectedButton.frame));
@@ -104,6 +105,10 @@ typedef enum{
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.view.backgroundColor = [UIColor colorWithRed:0.2 green:0.2 blue:0.2 alpha:1.000];
+    self.navigationItem.title = [NSString stringWithFormat:@"<%@",NSLocalizedString(@"back", nil)];
+    [self.saveButton setTitle:NSLocalizedString(@"screenShot", nil) forState:UIControlStateNormal];
+    
     if (self.bkgImageView) {
         [self.view insertSubview:self.bkgImageView atIndex:0];
     }
@@ -126,7 +131,7 @@ typedef enum{
     // Do any additional setup after loading the view.
 }
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context{
-    if ([keyPath isEqualToString:@"layer"]) {
+    if ([keyPath isEqualToString:@"selectedButton.layer.position"]) {
         self.buttonCase.center = self.selectedButton.center;
     }
 }
@@ -196,7 +201,8 @@ typedef enum{
     
     self.caseView = [[CaseView alloc]initWithFrame:CGRectMake(point.x, point.y, size.width, size.height) withColor:self.selectedButton.backgroundColor];
     self.textView.frame = self.caseView.bounds;
-    
+    self.textView.textColor = self.selectedButton.backgroundColor;
+    self.textView.font = [UIFont systemFontOfSize:self.view.frame.size.width>self.view.frame.size.height?self.view.frame.size.height/20:self.view.frame.size.width/20];
     self.caseView.backgroundColor = [UIColor colorWithWhite:1.000 alpha:0.600];
     self.textView.backgroundColor = [UIColor clearColor];
     [self.textView becomeFirstResponder];

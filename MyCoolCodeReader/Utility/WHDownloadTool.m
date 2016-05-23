@@ -8,7 +8,7 @@
 
 #import "WHDownloadTool.h"
 #import "AFNetworking.h"
-
+#import "MBProgressHUD+KR.h"
 @interface WHDownloadTool()
 
 @end
@@ -39,7 +39,7 @@ singleton_implementation(WHDownloadTool);
     AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     NSProgress *progress = [[NSProgress alloc]init];
-    
+    __weak typeof(self)safe = self;
     NSURLSessionDownloadTask *downloadTask = [manager downloadTaskWithRequest:request progress:&progress destination:^NSURL *(NSURL *targetPath, NSURLResponse *response) {
         NSUInteger sameFileCount = 0;
         NSString *filePath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).lastObject stringByAppendingPathComponent:[response suggestedFilename]];
@@ -54,7 +54,10 @@ singleton_implementation(WHDownloadTool);
         return documentsDirectoryURL;
     } completionHandler:^(NSURLResponse *response, NSURL *filePath, NSError *error) {
         NSLog(@"File downloaded to: %@", filePath);
-        
+        for (WHDownloadFile *downloadFile in safe.downloadList) {
+            downloadFile.fileStatus = FINISH_DOWNLOAD;
+            break;
+        }
         
     }];
 

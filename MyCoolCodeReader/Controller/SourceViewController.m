@@ -57,6 +57,7 @@ static NSString *html = nil;
 }
 -(void)startScreenShot{
     WHDrawViewController * drawController = [[WHDrawViewController alloc]initWithNibName:@"WHDrawViewController" bundle:nil withBkgView:self.view];
+    
     [self.navigationController pushViewController:drawController animated:YES];
 }
 -(void)loadCode:(NSString *)code{

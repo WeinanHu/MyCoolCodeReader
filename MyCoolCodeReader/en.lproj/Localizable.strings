@@ -5,13 +5,14 @@
   Created by Wayne on 16/5/19.
   Copyright © 2016年 WayneHu. All rights reserved.
 */
-"folderUp" = "←";
-"myFile" = "My File";
+"folderUp" = "back";
+"myFile" = "Documents";
 "webDownload" = "Web Download";
 "back" = "back";
 "downloadFromWeb" = "Download From Web";
 "unZip" = "Unzip";
 "unZipTheFile" = "Unzip the file?";
+"unZipFinished" = "Unzip Finished";
 "yes" = "Yes";
 "no" = "No";
 "yesAndCreateFolder" = "Yes and create folder";
@@ -19,5 +20,6 @@
 "loading" = "loading";
 "discoverDownload" = "Discover Download";
 "downloadFile" = "Download File?";
-"screenShot" = "Screen Shot";
+"downloadFinished" = "Download Finished";
+"screenShot" = "PIC Note";
 "saveSuccess" = "Success Save To Album";

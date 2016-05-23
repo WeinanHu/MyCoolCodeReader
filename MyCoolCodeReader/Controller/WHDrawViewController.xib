@@ -52,7 +52,7 @@
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UIk-bY-TOl">
                                     <rect key="frame" x="31" y="16" width="32" height="32"/>
                                     <animations/>
-                                    <color key="backgroundColor" red="0.0" green="0.79429086538461535" blue="0.19334182062217412" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="backgroundColor" red="0.00097628139624681678" green="0.56380208333333326" blue="0.14168273188051844" alpha="1" colorSpace="calibratedRGB"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="32" id="uzK-ny-Ybg"/>
                                         <constraint firstAttribute="height" constant="32" id="vX3-gS-8cb"/>
@@ -75,7 +75,7 @@
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H41-Yb-SBA">
                                     <rect key="frame" x="30" y="16" width="32" height="32"/>
                                     <animations/>
-                                    <color key="backgroundColor" red="0.99298878205128205" green="0.81724944017041479" blue="0.090967820187011925" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="backgroundColor" red="0.7734375" green="0.4873520103195092" blue="0.093089049210191996" alpha="1" colorSpace="calibratedRGB"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="32" id="Km6-oh-t62"/>
                                         <constraint firstAttribute="height" constant="32" id="PDk-b5-75L"/>

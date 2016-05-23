@@ -11,6 +11,7 @@
 #import "SourceViewController.h"
 #import "ZipArchive.h"
 #import "MBProgressHUD+KR.h"
+#import "WHHelpView.h"
 @interface WHFileListController ()<UITableViewDataSource,UITableViewDelegate,SSZipArchiveDelegate>
 @property(nonatomic,strong) NSArray *filesArray;
 @property(nonatomic,strong) WHFile *unZipFile;
@@ -42,6 +43,7 @@
     self.filesArray = nil;
     [self.tableView reloadData];
     [self addObserver:self forKeyPath:@"filesArray" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:nil];
+//    [[UIApplication sharedApplication].keyWindow addSubview:[WHHelpView viewWithRect:CGRectMake([UIScreen mainScreen].bounds.size.width-64, 20, 56, 44)]];
 }
 -(void)viewWillDisappear:(BOOL)animated{
     [self removeObserver:self forKeyPath:@"filesArray"];
@@ -62,13 +64,18 @@
 }
 -(void)setUpNavigation{
 //    [self.navigationController.navigationBar setTitleTextAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14],NSForegroundColorAttributeName:[UIColor colorWithRed:0.241 green:0.293 blue:1.000 alpha:1.000]}];
-    self.navigationItem.title = [self.currentPath lastPathComponent];
+    if (self.index==0) {
+        self.navigationItem.title = NSLocalizedString(@"myFile", nil);
+    }else{
+        self.navigationItem.title = [self.currentPath lastPathComponent];
+    }
+    
 }
 
 -(void)setUpButtons{
     NSString *upStr = NSLocalizedString(@"folderUp", nil);
     UIBarButtonItem *barButton =[[UIBarButtonItem alloc]initWithTitle:upStr style:UIBarButtonItemStylePlain target:self action:@selector(upFolder)];
-    [barButton setTitleTextAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:26]} forState:UIControlStateNormal];
+//    [barButton setTitleTextAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:26]} forState:UIControlStateNormal];
     self.navigationItem.leftBarButtonItem = barButton;
     
 //    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"Edit" style:UIBarButtonItemStylePlain target:self action:@selector(editFile)];
@@ -182,7 +189,7 @@
 }
 -(void)zipArchiveDidUnzipArchiveAtPath:(NSString *)path zipInfo:(unz_global_info)zipInfo unzippedPath:(NSString *)unzippedPath{
     NSLog(@"+++%ld%ld%ld",zipInfo.number_entry,zipInfo.number_disk_with_CD,zipInfo.size_comment);
-    [MBProgressHUD showSuccess:@"zip finished"];
+    [MBProgressHUD showSuccess:@"unzip finished" toView:self.view];
     self.filesArray = nil;
 }
 
