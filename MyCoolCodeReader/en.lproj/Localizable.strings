@@ -22,4 +22,7 @@
 "downloadFile" = "Download File?";
 "downloadFinished" = "Download Finished";
 "screenShot" = "PIC Note";
+"save" = "Save";
 "saveSuccess" = "Success Save To Album";
+"deleteSuggestion" = "If you want to delete the case you paint,you can long press the case until the case is blinking,then try to make a drag, then loosen your finger,and the case has been deleted.";
+"ok" = "OK";

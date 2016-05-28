@@ -8,13 +8,15 @@
 
 #import "WHDrawViewController.h"
 #import "MBProgressHUD+KR.h"
+#import "WHTapHelpView.h"
+#import "WHPanHelpView.h"
 typedef enum{
     NONE,
     RED_TYPE,
     GREEN_TYPE,
     YELLOW_TYPE
 }DRAW_TYPE;
-@interface WHDrawViewController ()<UITextViewDelegate,UIGestureRecognizerDelegate>
+@interface WHDrawViewController ()<UITextViewDelegate,UIGestureRecognizerDelegate,UIAlertViewDelegate>
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *topConstraint;
 @property (weak, nonatomic) IBOutlet UIView *buttonContainerView;
 @property (weak, nonatomic) IBOutlet UIButton *redButton;
@@ -30,6 +32,8 @@ typedef enum{
 @property(nonatomic,strong) ArrowView *arrowView;
 @property(nonatomic,strong) NSMutableArray *arrowViewArray;
 @property(nonatomic,strong) NSMutableArray *tapViewArray;
+@property(nonatomic,strong) NSMutableArray *endPointArray;
+@property(nonatomic,strong) NSMutableArray *angleArray;
 @property(nonatomic,strong) UITextView *textView;
 @property(nonatomic,strong) CaseView *caseView;
 @property(nonatomic,assign) CGFloat angle;
@@ -38,6 +42,7 @@ typedef enum{
 @property(nonatomic,assign) NSInteger currentTapIndex;
 @property(nonatomic,strong) NSTimer *blinkTimer;
 @property(nonatomic,strong) UIView *blinkView;
+@property(nonatomic,assign) NSInteger helpIndex;
 @end
 
 @implementation WHDrawViewController
@@ -53,7 +58,7 @@ typedef enum{
 -(UIImage*)captureView:(UIView*)view{
     
     CGRect rect = [view frame];
-
+    
     UIGraphicsBeginImageContextWithOptions(rect.size, NO, 0.0);
     
     CGContextRef context = UIGraphicsGetCurrentContext();
@@ -61,7 +66,7 @@ typedef enum{
     UIImage *img = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     return img;
-
+    
 }
 - (UIImage *) captureScreen {
     UIWindow *keyWindow = [[UIApplication sharedApplication] keyWindow];
@@ -96,18 +101,113 @@ typedef enum{
     [super viewWillDisappear:animated];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
-
+    
     [self removeObserver:self forKeyPath:@"selectedButton.layer.position"];
 }
 -(void)viewDidLayoutSubviews{
     NSLog(@"rect selectedButton:%@",NSStringFromCGRect(self.selectedButton.frame));
+    int tapViewCount = 0;
+    if (![[NSUserDefaults standardUserDefaults]boolForKey:@"isShowedHelp"]) {
+        NSLog(@"%@",[UIApplication sharedApplication].keyWindow.subviews);
+        for (UIView *view in [UIApplication sharedApplication].keyWindow.subviews) {
+            NSLog(@"%@",[NSThread currentThread]);
+            
+            if ([view isKindOfClass:[WHTapHelpView class]]) {
+                tapViewCount++;
+                if (tapViewCount>1) {
+                    [view removeFromSuperview];
+                }else{
+                    WHTapHelpView *tapView = (WHTapHelpView*)view;
+                    [tapView removeFromSuperview];
+                    tapView = nil;
+                    //                for (UIView *viewShouldDelete in [UIApplication sharedApplication].keyWindow.subviews) {
+                    //                    if ([view isKindOfClass:[WHTapHelpView class]]) {
+                    //                        [viewShouldDelete removeFromSuperview];
+                    //                    }
+                    //                }
+                    if (self.helpIndex ==0) {
+                        __weak typeof(self)weekSafe = self;
+                        [[UIApplication sharedApplication].keyWindow addSubview:[WHTapHelpView viewWithRect:CGRectMake(0, 64, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height-64)didClickRect:^{
+                            __strong typeof(weekSafe)safe = weekSafe;
+                            [safe didTap];
+                            [tapView removeFromSuperview];
+                            [safe performSelector:@selector(tapAgainHelp) withObject:nil afterDelay:0.1];
+                            safe.helpIndex ++;
+                        }]];
+                        
+                    }else if(self.helpIndex ==1){
+                        __weak typeof(self)weekSafe = self;
+                        [[UIApplication sharedApplication].keyWindow addSubview:[WHTapHelpView viewWithRect:CGRectMake(0, 64, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height-64)didClickRect:^{
+                            __strong typeof(weekSafe)safe = weekSafe;
+                            [safe didTap];
+                            [safe performSelector:@selector(panHelp) withObject:nil afterDelay:0.1];
+                            safe.helpIndex ++;
+                        }]];
+                    }
+                    
+                }
+            }
+        }
+    }
+}
+-(void)panHelp{
+    for (UIView *view in [UIApplication sharedApplication].keyWindow.subviews) {
+        if ([view isKindOfClass:[WHTapHelpView class]]) {
+            [view removeFromSuperview];
+        }
+    }
+    __weak typeof(self)weekSelf = self;
+    CGPoint pointStart = CGPointMake(100, 100);
+    CGPoint pointEnd = CGPointMake(200, 200);
+    NSLog(@"%@",[UIApplication sharedApplication].keyWindow.subviews);
+    [[UIApplication sharedApplication].keyWindow addSubview:[WHPanHelpView viewWithStart:pointStart withEnd:pointEnd duration:1 didComplete:^{
+        __strong typeof(weekSelf) safe = weekSelf;
+        safe.endPoint = pointEnd;
+        safe.startPoint = pointStart;
+        [safe.arrowView removeFromSuperview];
+        safe.arrowView = [[ArrowView alloc]initWithFrame:safe.view.bounds startPoint:safe.startPoint endPoint:safe.endPoint withColor:safe.selectedButton.backgroundColor];
+        safe.arrowView.backgroundColor = [UIColor clearColor];
+        [safe.view insertSubview:safe.arrowView belowSubview:safe.buttonContainerView];
+        
+        [safe.endPointArray addObject:[NSValue valueWithCGPoint:safe.endPoint]];
+        //画caseView
+        [safe createCaseViewWithArrowStartPoint:safe.startPoint endPoint:safe.endPoint inView:safe.view];
+        
+        safe.helpIndex ++;
+    }]];
     
+}
+-(void)tapAgainHelp{
+    for (UIView *view in [UIApplication sharedApplication].keyWindow.subviews) {
+        if ([view isKindOfClass:[WHTapHelpView class]]) {
+            [view removeFromSuperview];
+        }
+    }
+    __weak typeof(self)weekSafe = self;
+    [[UIApplication sharedApplication].keyWindow addSubview:[WHTapHelpView viewWithRect:CGRectMake(0, 64, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height-64)didClickRect:^{
+        __strong typeof(weekSafe)safe = weekSafe;
+        [safe didTap];
+        [safe performSelector:@selector(panHelp) withObject:nil afterDelay:0.1];
+        safe.helpIndex ++;
+    }]];
+}
+-(void)backAction{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.helpIndex = 0;
+    if (![[NSUserDefaults standardUserDefaults]boolForKey:@"isShowedHelp"]) {
+        __weak typeof(self)safe = self;
+        [[UIApplication sharedApplication].keyWindow addSubview:[WHTapHelpView viewWithRect:CGRectMake(0, 64, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height-64)didClickRect:^{
+            [safe didTap];
+            [safe performSelector:@selector(tapAgainHelp) withObject:nil afterDelay:0.1];
+            safe.helpIndex ++;
+        }]];
+    }
     self.view.backgroundColor = [UIColor colorWithRed:0.2 green:0.2 blue:0.2 alpha:1.000];
-    self.navigationItem.title = [NSString stringWithFormat:@"<%@",NSLocalizedString(@"back", nil)];
-    [self.saveButton setTitle:NSLocalizedString(@"screenShot", nil) forState:UIControlStateNormal];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:[NSString stringWithFormat:@"<%@",NSLocalizedString(@"back", nil)] style:UIBarButtonItemStylePlain target:self action:@selector(backAction)];
+    [self.saveButton setTitle:NSLocalizedString(@"save", nil) forState:UIControlStateNormal];
     
     if (self.bkgImageView) {
         [self.view insertSubview:self.bkgImageView atIndex:0];
@@ -142,7 +242,7 @@ typedef enum{
             [self.textView resignFirstResponder];
         }
         NSLog(@"began:%@",NSStringFromCGPoint(point));
-//        [self.caseView removeFromSuperview];
+        //        [self.caseView removeFromSuperview];
         self.startPoint = point;
         
     }else{
@@ -150,7 +250,10 @@ typedef enum{
         if (self.drawType!=NONE) {
             //画箭头
             [self.arrowView removeFromSuperview];
-            
+            CGFloat distance = [self getDistanceFromStartPoint:self.startPoint toEndPoint:point];
+            if (distance< 20) {
+                return;
+            }
             self.arrowView = [[ArrowView alloc]initWithFrame:self.view.bounds startPoint:self.startPoint endPoint:point withColor:self.selectedButton.backgroundColor];
             self.arrowView.backgroundColor = [UIColor clearColor];
             [self.view insertSubview:self.arrowView belowSubview:self.buttonContainerView];
@@ -159,10 +262,17 @@ typedef enum{
     }
     if(sender.state == UIGestureRecognizerStateEnded){
         self.endPoint = point;
+        CGFloat distance = [self getDistanceFromStartPoint:self.startPoint toEndPoint:self.endPoint];
+        if (distance< 20) {
+            [self.arrowView removeFromSuperview];
+            return;
+        }
+        
+        [self.endPointArray addObject:[NSValue valueWithCGPoint:self.endPoint]];
         //画caseView
         [self createCaseViewWithArrowStartPoint:self.startPoint endPoint:self.endPoint inView:self.view];
     }
-
+    
 }
 -(CGFloat)getAngleFromStartPoint:(CGPoint)startPoint endPoint:(CGPoint)endPoint{
     CGFloat angle;
@@ -178,11 +288,15 @@ typedef enum{
 -(void)createCaseViewWithArrowStartPoint:(CGPoint)startPoint endPoint:(CGPoint)endPoint inView:(UIView*)view{
     CGFloat angle = [self getAngleFromStartPoint:startPoint endPoint:endPoint];
     self.angle = angle;
+    [self.angleArray addObject:[NSNumber numberWithDouble:self.angle]];
     CGPoint point;
     CGSize size;
     self.textView = [[UITextView alloc]init];
-    self.textView.font = [UIFont systemFontOfSize:14];
+    self.textView.font = [UIFont systemFontOfSize:self.view.frame.size.width>self.view.frame.size.height?self.view.frame.size.height/20:self.view.frame.size.width/20];
+    self.textView.scrollEnabled = NO;
+    
     self.textView.text = @"0";
+    
     size = [self.textView sizeThatFits:CGSizeMake(100, MAXFLOAT)];
     self.textView.text = @"";
     //angle范围 -M_PI/2 to 3*M_PI/2
@@ -197,7 +311,7 @@ typedef enum{
         point = CGPointMake(endPoint.x-size.width/2, endPoint.y-size.height);
     }
     
-//    [self.caseView removeFromSuperview];
+    //    [self.caseView removeFromSuperview];
     
     self.caseView = [[CaseView alloc]initWithFrame:CGRectMake(point.x, point.y, size.width, size.height) withColor:self.selectedButton.backgroundColor];
     self.textView.frame = self.caseView.bounds;
@@ -284,7 +398,7 @@ typedef enum{
         CGFloat angle = self.angle;
         CGPoint endPoint = self.endPoint;
         CGPoint point;
-        CGSize size = [self.textView sizeThatFits:CGSizeMake(100, MAXFLOAT)];;
+        CGSize size = [self.textView sizeThatFits:CGSizeMake(self.view.frame.size.width>self.view.frame.size.height?self.view.frame.size.height/3:self.view.frame.size.width/3, MAXFLOAT)];;
         if (angle>-M_PI/4 && angle<=M_PI/4) {
             point = CGPointMake(endPoint.x, endPoint.y-size.height/2);
         }else if(angle>M_PI/4 && angle<=M_PI*3/4){
@@ -304,30 +418,39 @@ typedef enum{
     if (self.arrowViewArray.count==0) {
         self.currentTapIndex = 0;
     }
-//    ArrowView *arrowView = self.arrowViewArray[self.currentTapIndex];
+    //    ArrowView *arrowView = self.arrowViewArray[self.currentTapIndex];
     if ([self.arrowViewArray containsObject:self.arrowView]||self.arrowView ==nil) {
-
+        
     }else{
         [self.arrowViewArray addObject:self.arrowView];
         self.arrowView = nil;
     }
     
     
-        UIView *view = [[UIView alloc]initWithFrame:textView.superview.frame];
-        view.backgroundColor = [UIColor clearColor];
-        [self.view insertSubview:view aboveSubview:self.buttonContainerView];
-        UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapCaseView:)];
-        //        tapGesture.delegate = self;
-        [view addGestureRecognizer:tapGesture];
-        UILongPressGestureRecognizer *longPressGesture = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(longPressCaseView:)];
-        //        longPressGesture.delegate = self;
-        [view addGestureRecognizer:longPressGesture];
-        NSLog(@"%ld",view.tag);
-        [self.tapViewArray insertObject:view atIndex:self.currentTapIndex];
+    UIView *view = [[UIView alloc]initWithFrame:textView.superview.frame];
+    view.backgroundColor = [UIColor clearColor];
+    [self.view insertSubview:view aboveSubview:self.buttonContainerView];
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapCaseView:)];
+    //        tapGesture.delegate = self;
+    [view addGestureRecognizer:tapGesture];
+    UILongPressGestureRecognizer *longPressGesture = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(longPressCaseView:)];
+    //        longPressGesture.delegate = self;
+    [view addGestureRecognizer:longPressGesture];
+    NSLog(@"%ld",view.tag);
+    [self.tapViewArray insertObject:view atIndex:self.currentTapIndex];
     
     self.currentTapIndex = self.arrowViewArray.count;
+    if(![[NSUserDefaults standardUserDefaults]boolForKey:@"isShowedHelp"]){
+        
+        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:nil message:NSLocalizedString(@"deleteSuggestion", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"ok", nil) otherButtonTitles:nil, nil];
+        [[UIApplication sharedApplication].keyWindow addSubview:alertView];
+        [alertView show];
+    }
 }
-
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    [[NSUserDefaults standardUserDefaults]setBool:YES forKey:@"isShowedHelp"];
+    
+}
 -(void)tapCaseView:(UITapGestureRecognizer*)sender{
     [self.view endEditing:YES];
     for (int i=0 ; i <self.tapViewArray.count; i++) {
@@ -340,8 +463,13 @@ typedef enum{
     ArrowView *arrowView=self.arrowViewArray[self.currentTapIndex];
     
     NSLog(@"%@:%ld",sender.view,sender.view.tag);
-//    self.caseView = sender.view.superview;
+    //    self.caseView = sender.view.superview;
     self.textView = [arrowView viewWithTag:1235];
+    self.caseView = [arrowView viewWithTag:123];
+    NSValue *endPointValue = self.endPointArray[self.currentTapIndex];
+    self.endPoint = [endPointValue CGPointValue];
+    NSNumber *angleNumber = self.angleArray[self.currentTapIndex];
+    self.angle = [angleNumber doubleValue];
     [self.textView becomeFirstResponder];
     [sender.view removeFromSuperview];
     [self.tapViewArray removeObject:sender.view];
@@ -368,6 +496,8 @@ typedef enum{
         self.deletePanEndPoint = point;
         ArrowView *arrowView=self.arrowViewArray[self.currentTapIndex];
         if ([self getDistanceFromStartPoint:self.deletePanStartPoint toEndPoint:self.deletePanEndPoint]>50) {
+            self.caseView = [arrowView viewWithTag:123];
+            [self.tapViewArray[self.currentTapIndex] removeFromSuperview];
             
             [self deleteArrowView:arrowView];
             oldIndex--;
@@ -396,13 +526,13 @@ typedef enum{
     [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
         view.alpha=0.5;
     } completion:^(BOOL finished) {
-       dispatch_async(dispatch_get_main_queue(), ^{
-          [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-              view.alpha = 1;
-          } completion:^(BOOL finished) {
-              
-          }];
-       });
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+                view.alpha = 1;
+            } completion:^(BOOL finished) {
+                
+            }];
+        });
     }];
 }
 -(CGFloat)getDistanceFromStartPoint:(CGPoint)startPoint toEndPoint:(CGPoint)endPoint{
@@ -426,7 +556,7 @@ typedef enum{
         
     }
     transformY = transformX * tan(angle);
-//    view.layer.anchorPoint = [view viewWithTag:1235].superview.center;
+    //    view.layer.anchorPoint = [view viewWithTag:1235].superview.center;
     NSLog(@"%@",NSStringFromCGPoint(view.layer.anchorPoint));
     [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
         view.transform = CGAffineTransformMakeTranslation(transformX,transformY);
@@ -436,11 +566,14 @@ typedef enum{
             for (int i=0; i<self.arrowViewArray.count; i++) {
                 UIView *viewIn = self.arrowViewArray[i];
                 if (view == viewIn) {
+                    [self.tapViewArray[i] removeFromSuperview];
                     [self.tapViewArray removeObject:self.tapViewArray[i]];
+                    [self.endPointArray removeObject:self.endPointArray[i]];
+                    [self.angleArray removeObject:self.angleArray[i]];
                 }
             }
             [self.arrowViewArray removeObject:view];
-
+            
         }
     }];
 }
@@ -452,15 +585,15 @@ typedef enum{
     CGRect keyboardFrame = [notification.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
     double duration = [notification.userInfo[UIKeyboardAnimationDurationUserInfoKey] doubleValue];
     UIViewAnimationOptions options = [notification.userInfo[UIKeyboardAnimationCurveUserInfoKey] intValue];
-
+    
     CGRect rect = self.view.frame;
     rect.origin.y = -keyboardFrame.size.height;
     [UIView animateWithDuration:duration delay:0 options:options animations:^{
         self.view.frame = rect;
     } completion:^(BOOL finished) {
-//        dispatch_async(dispatch_get_main_queue(), ^{
-//
-//        });
+        //        dispatch_async(dispatch_get_main_queue(), ^{
+        //
+        //        });
     }];
     
 }
@@ -470,13 +603,13 @@ typedef enum{
     }
     double duration = [notification.userInfo[UIKeyboardAnimationDurationUserInfoKey] doubleValue];
     UIViewAnimationOptions options = [notification.userInfo[UIKeyboardAnimationCurveUserInfoKey] intValue];
-
+    
     [UIView animateWithDuration:duration delay:0 options:options animations:^{
         self.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
     } completion:^(BOOL finished) {
-//        dispatch_async(dispatch_get_main_queue(), ^{
-//            [self scrollToBottom:NO];
-//        });
+        //        dispatch_async(dispatch_get_main_queue(), ^{
+        //            [self scrollToBottom:NO];
+        //        });
     }];
     
 }
@@ -511,6 +644,18 @@ typedef enum{
         _tapViewArray = [[NSMutableArray alloc] init];
     }
     return _tapViewArray;
+}
+- (NSMutableArray *)endPointArray {
+    if(_endPointArray == nil) {
+        _endPointArray = [[NSMutableArray alloc] init];
+    }
+    return _endPointArray;
+}
+- (NSMutableArray *)angleArray {
+    if(_angleArray == nil) {
+        _angleArray = [[NSMutableArray alloc] init];
+    }
+    return _angleArray;
 }
 @end
 

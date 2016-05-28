@@ -8,6 +8,7 @@
 
 #import "SourceViewController.h"
 #import "WHDrawViewController.h"
+#import "WHTapHelpView.h"
 static NSString *html = nil;
 
 @interface SourceViewController ()<UIWebViewDelegate>
@@ -36,12 +37,49 @@ static NSString *html = nil;
     }
     return self;
 }
-
+-(void)viewDidLayoutSubviews{
+    [super viewDidLayoutSubviews];
+    if (![[NSUserDefaults standardUserDefaults]boolForKey:@"isShowedHelp"]) {
+        for (UIView *view in [UIApplication sharedApplication].keyWindow.subviews) {
+            if ([view isKindOfClass:[WHTapHelpView class]]) {
+                WHTapHelpView *tapView = (WHTapHelpView*)view;
+                [tapView removeFromSuperview];
+                tapView = nil;
+                __weak typeof(self)weekSelf = self;
+                [[UIApplication sharedApplication].keyWindow addSubview:[WHTapHelpView viewWithRect:CGRectMake([UIScreen mainScreen].bounds.size.width-98, 20, 90, 44)didClickRect:^{
+                    __strong typeof(weekSelf)safe = weekSelf;
+                    [safe startScreenShot];
+                }]];
+            }
+        }
+    }
+}
+-(void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    self.webView.scalesPageToFit = YES;
+    self.webView.scrollView.minimumZoomScale = 0.02;
+    self.webView.scrollView.maximumZoomScale = 50;
+}
+-(void)backAction{
+    [self.navigationController popViewControllerAnimated:YES];
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    
+    if (![[NSUserDefaults standardUserDefaults]boolForKey:@"isShowedHelp"]) {
+        __weak typeof(self)safe = self;
+        [[UIApplication sharedApplication].keyWindow addSubview:[WHTapHelpView viewWithRect:CGRectMake([UIScreen mainScreen].bounds.size.width-78, 20, 70, 44)didClickRect:^{
+            __strong typeof(safe)strongSafe = safe;
+            [strongSafe startScreenShot];
+        }]];
+    }
     //CGSize screenSize = [UIScreen mainScreen].bounds.size;
+    
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"screenShot", nil) style:UIBarButtonItemStylePlain target:self action:@selector(startScreenShot)];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:[NSString stringWithFormat:@"<%@",NSLocalizedString(@"back", nil)] style:UIBarButtonItemStylePlain target:self action:@selector(backAction)];
+
     UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 150, 100)];
     label.center = self.view.center;
     label.backgroundColor = [UIColor colorWithWhite:0.841 alpha:0.720];
@@ -66,8 +104,25 @@ static NSString *html = nil;
             if (html == nil) {
                 html = [NSString stringWithContentsOfFile:[[[self class] htmlRoot] stringByAppendingPathComponent:@"index.html"] encoding:NSUTF8StringEncoding error:nil];
             }
-            
-            NSString *htmlCode = [html stringByReplacingOccurrencesOfString:@"__CODE__" withString:code];
+            NSMutableString * str = [NSMutableString stringWithString:code];
+            while (1) {
+                NSRange range = [str rangeOfString:@"<"];
+                if (!range.length) {
+                    break;
+                }
+                [str replaceCharactersInRange:range withString:@"&#60;"];
+            }
+            while (1) {
+                
+                NSRange range = [str rangeOfString:@">"];
+                if (!range.length) {
+                    break;
+                }
+                [str replaceCharactersInRange:range withString:@"&#62;"];
+
+                
+            }
+            NSString *htmlCode = [html stringByReplacingOccurrencesOfString:@"__CODE__" withString:str];
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self.webView
                  loadHTMLString:htmlCode
@@ -79,6 +134,7 @@ static NSString *html = nil;
         
     }
 }
+
 -(void)loadFinished{
     NSLog(@"load complete");
     [[self.view viewWithTag:999]removeFromSuperview];

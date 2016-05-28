@@ -22,4 +22,7 @@
 "downloadFile" = "是否下载文件?";
 "downloadFinished" = "下载完成";
 "screenShot" = "截图笔记";
+"save" = "保存";
 "saveSuccess" = "成功保存至相册";
+"deleteSuggestion" = "如果您想要删除所画的方框，长按方框，然后进行拖拽，松开后，方框就被删除";
+"ok" = "好";

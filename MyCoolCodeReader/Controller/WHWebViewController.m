@@ -13,12 +13,14 @@
 @interface WHWebViewController ()<UIAlertViewDelegate,UIPopoverPresentationControllerDelegate>
 @property(nonatomic,strong) NSURL *downloadURL;
 @property(nonatomic,strong) WHDownloadListController *downloadListController;
+@property(nonatomic,assign) BOOL isShowDownload;
 @end
 
 @implementation WHWebViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.isShowDownload = NO;
     [self setUpNaviItem];
     
     // Do any additional setup after loading the view.
@@ -54,7 +56,7 @@
     
     self.downloadListController.modalPresentationStyle = UIModalPresentationPopover;
     self.downloadListController.popoverPresentationController.sourceView = self.view;
-    self.downloadListController.popoverPresentationController.sourceRect = CGRectMake([UIScreen mainScreen].bounds.size.width-68, 20, 64, 44);
+    self.downloadListController.popoverPresentationController.sourceRect = CGRectMake(self.view.bounds.size.width-68, 20, 64, 44);
     self.downloadListController.popoverPresentationController.permittedArrowDirections = UIPopoverArrowDirectionUp;
     self.downloadListController.popoverPresentationController.delegate = self;
     [self presentViewController:self.downloadListController animated:YES completion:nil];
@@ -78,7 +80,12 @@
     NSLog(@"%@",request);
     NSURL *URL = request.URL;
     NSString *urlStr = [URL absoluteString];
+    if (self.isShowDownload == YES) {
+        return YES;
+    }
     if ([urlStr containsString:@"codeload.github.com/"]&&[urlStr containsString:@"/zip/master"]) {
+        
+        self.isShowDownload = YES;
         self.downloadURL = URL;
         NSLog(@"发现下载链接");
         UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"discoverDownload", nil) message:NSLocalizedString(@"downloadFile", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"no", nil) otherButtonTitles:NSLocalizedString(@"yes", nil), nil];
@@ -87,6 +94,9 @@
         
         
     }else if([[[[URL URLByDeletingLastPathComponent]URLByDeletingLastPathComponent]absoluteString ]isEqualToString:@"https://github.com/"]){
+        
+        self.isShowDownload = YES;
+        
         NSString *sourceStr = [NSString stringWithFormat:@"%@/%@",[[urlStr stringByDeletingLastPathComponent]lastPathComponent ] ,[urlStr lastPathComponent]];
         NSString *completeSourceStr = [NSString stringWithFormat:@"https://codeload.github.com/%@/zip/master",sourceStr];
         NSString *info =[NSString stringWithFormat:@"获取到%@",sourceStr.lastPathComponent];
@@ -108,6 +118,7 @@
 }
 #pragma mark - UIAlertViewDelegate
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    self.isShowDownload = NO;
     switch (buttonIndex) {
         case 0:
             NSLog(@"取消下载");

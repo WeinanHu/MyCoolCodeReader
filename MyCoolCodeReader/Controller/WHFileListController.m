@@ -11,7 +11,6 @@
 #import "SourceViewController.h"
 #import "ZipArchive.h"
 #import "MBProgressHUD+KR.h"
-#import "WHHelpView.h"
 @interface WHFileListController ()<UITableViewDataSource,UITableViewDelegate,SSZipArchiveDelegate>
 @property(nonatomic,strong) NSArray *filesArray;
 @property(nonatomic,strong) WHFile *unZipFile;
@@ -43,15 +42,15 @@
     self.filesArray = nil;
     [self.tableView reloadData];
     [self addObserver:self forKeyPath:@"filesArray" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:nil];
-//    [[UIApplication sharedApplication].keyWindow addSubview:[WHHelpView viewWithRect:CGRectMake([UIScreen mainScreen].bounds.size.width-64, 20, 56, 44)]];
+    
 }
 -(void)viewWillDisappear:(BOOL)animated{
     [self removeObserver:self forKeyPath:@"filesArray"];
 }
 -(void)viewDidLayoutSubviews{
     [super viewDidLayoutSubviews];
-    NSLog(@"%f",[UIScreen mainScreen ].bounds.size.width);
-    self.tableView.frame = [UIScreen mainScreen].bounds;
+    NSLog(@"%f",self.view.bounds.size.width);
+    self.tableView.frame = self.view.bounds;
     
 }
 
@@ -127,7 +126,7 @@
     }else if([[file.fileName pathExtension]isEqualToString:@"zip"]){
         
         self.unZipFile = file;
-        NSString *info =[NSString stringWithFormat:@"%@%@",NSLocalizedString(@"unZip", nil),file.fileName.lastPathComponent];
+        NSString *info =[NSString stringWithFormat:@"%@ %@",NSLocalizedString(@"unZip", nil),file.fileName.lastPathComponent];
         UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:info message:NSLocalizedString(@"unZipTheFile", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"no", nil) otherButtonTitles:NSLocalizedString(@"yes", nil), NSLocalizedString(@"yesAndCreateFolder", nil),nil];
         [[UIApplication sharedApplication].keyWindow addSubview:alertView];
         [alertView show];

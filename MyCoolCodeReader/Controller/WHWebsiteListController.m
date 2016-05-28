@@ -19,6 +19,7 @@
     [super viewDidLoad];
     self.navigationItem.title = NSLocalizedString(@"downloadFromWeb", nil);
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"myFile", nil) style:UIBarButtonItemStylePlain target:self action:@selector(goToMyfiles)];
+    
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
