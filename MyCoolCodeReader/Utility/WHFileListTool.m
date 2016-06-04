@@ -65,6 +65,7 @@ static WHFileListTool* fileListTool;
         [user setBool:YES forKey:@"didFirstStart"];
         [self creatHelloWorld];
     }
+    [self creatCSS];
 }
 -(void)creatHelloWorld{
     NSString *path = [[NSBundle mainBundle]pathForResource:@"HelloWorld.txt" ofType:nil];
@@ -86,5 +87,16 @@ static WHFileListTool* fileListTool;
     if (error) {
         NSLog(@"write error:%@",error.userInfo);
     }
+}
+-(void)creatCSS{
+    NSString *path = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES).lastObject;
+    path = [path stringByAppendingPathComponent:@"Preferences/html"];
+    if ([[NSFileManager defaultManager]fileExistsAtPath:path]) {
+        return;
+    }
+    NSError *error = nil;
+    NSString *cssBundlePath = [[NSBundle mainBundle]pathForResource:@"html" ofType:nil];
+    [[NSFileManager defaultManager]copyItemAtPath:cssBundlePath toPath:path error:&error];
+    
 }
 @end

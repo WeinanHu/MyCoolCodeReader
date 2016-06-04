@@ -188,7 +188,7 @@
 }
 -(void)zipArchiveDidUnzipArchiveAtPath:(NSString *)path zipInfo:(unz_global_info)zipInfo unzippedPath:(NSString *)unzippedPath{
     NSLog(@"+++%ld%ld%ld",zipInfo.number_entry,zipInfo.number_disk_with_CD,zipInfo.size_comment);
-    [MBProgressHUD showSuccess:@"unzip finished" toView:self.view];
+    [MBProgressHUD showSuccess:NSLocalizedString(@"unZipFinished", nil) toView:self.view];
     self.filesArray = nil;
 }
 

@@ -83,9 +83,24 @@ typedef enum{
 {
     [self.view endEditing:YES];
     [self.buttonContainerView setHidden:YES];
-    UIImageWriteToSavedPhotosAlbum([self captureView:view], nil, nil, nil);
-    [MBProgressHUD showSuccess:NSLocalizedString(@"saveSuccess", nil) toView:self.view];
+    UIImageWriteToSavedPhotosAlbum([self captureView:view],
+                                   self,
+                                   @selector(image:didFinishSavingWithError:contextInfo:),
+                                   nil);
+    
     [self.buttonContainerView setHidden:NO];
+}
+- (void)image:(UIImage *)image
+didFinishSavingWithError:(NSError *)error
+  contextInfo:(void *)contextInfo{
+    if (error != NULL){
+        //失败
+        [MBProgressHUD showError:NSLocalizedString(@"saveFailed", nil) toView:self.view];
+    }
+    else{
+        //成功
+        [MBProgressHUD showSuccess:NSLocalizedString(@"saveSuccess", nil) toView:self.view];
+    }
 }
 #pragma mark - view
 -(void)viewWillAppear:(BOOL)animated{
@@ -120,11 +135,7 @@ typedef enum{
                     WHTapHelpView *tapView = (WHTapHelpView*)view;
                     [tapView removeFromSuperview];
                     tapView = nil;
-                    //                for (UIView *viewShouldDelete in [UIApplication sharedApplication].keyWindow.subviews) {
-                    //                    if ([view isKindOfClass:[WHTapHelpView class]]) {
-                    //                        [viewShouldDelete removeFromSuperview];
-                    //                    }
-                    //                }
+                    
                     if (self.helpIndex ==0) {
                         __weak typeof(self)weekSafe = self;
                         [[UIApplication sharedApplication].keyWindow addSubview:[WHTapHelpView viewWithRect:CGRectMake(0, 64, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height-64)didClickRect:^{

@@ -10,6 +10,7 @@
 #import "WHFileListController.h"
 #import "WHFileListTool.h"
 #import "WHWebsiteListController.h"
+#import "WHSettingTableViewController.h"
 @interface AppDelegate ()
 
 @end
@@ -19,18 +20,23 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     self.window = [[UIWindow alloc]initWithFrame:[[UIScreen mainScreen] bounds]];
-    
+    //1
     WHFileListController *fileListController =[[WHFileListController alloc]init];
     fileListController.index = 0;
     fileListController.currentPath = DOCUMENT_DIRECTORY;
     UINavigationController *navi = [[UINavigationController alloc]initWithRootViewController:fileListController];
-    
+    //2
     WHWebsiteListController *webListController = [[WHWebsiteListController alloc]initWithStyle:UITableViewStyleGrouped];
     UINavigationController *naviSecond = [[UINavigationController alloc]initWithRootViewController:webListController];
     
     UITabBarController *tabBarController = [[UITabBarController alloc]init];
+    //3
+    WHSettingTableViewController *settingController = [[WHSettingTableViewController alloc]initWithNibName:@"WHSettingTableViewController" bundle:nil];
+    UINavigationController *naviThird = [[UINavigationController alloc]initWithRootViewController:settingController];
     
-    [tabBarController setViewControllers:@[navi,naviSecond]];
+
+    
+    [tabBarController setViewControllers:@[navi,naviSecond,naviThird]];
     [tabBarController setSelectedIndex:0];
     navi.tabBarItem.title = NSLocalizedString(@"myFile", nil);
     navi.tabBarItem.image = [UIImage imageNamed:@"file"];
@@ -38,7 +44,10 @@
     naviSecond.tabBarItem.title = NSLocalizedString(@"webDownload", nil);
     naviSecond.tabBarItem.image = [UIImage imageNamed:@"net"];
     naviSecond.tabBarItem.selectedImage = [UIImage imageNamed:@"net_select"];
-    
+    naviThird.tabBarItem.title = NSLocalizedString(@"setting", nil);
+    naviThird.tabBarItem.image = [UIImage imageNamed:@"setting"];
+    naviThird.tabBarItem.selectedImage = [UIImage imageNamed:@"setting_select"];
+
 //    int line = 64;
 //    navi.tabBarItem.image = [[UIImage imageNamed:@"file"] thumbNailWithSize:CGSizeMake(line, line)];
 //    navi.tabBarItem.selectedImage = [[UIImage imageNamed:@"file_select"] thumbNailWithSize:CGSizeMake(line, line)];

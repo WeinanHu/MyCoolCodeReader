@@ -9,6 +9,14 @@
 /* Begin PBXBuildFile section */
 		B006B4F21CEB3AC40053B687 /* UIImage+WHThumbNailImage.m in Sources */ = {isa = PBXBuildFile; fileRef = B006B4F11CEB3AC40053B687 /* UIImage+WHThumbNailImage.m */; };
 		B04324BE1CF451A800EF24E7 /* WHPanHelpView.m in Sources */ = {isa = PBXBuildFile; fileRef = B04324BD1CF451A800EF24E7 /* WHPanHelpView.m */; };
+		B05DDE571CFE96E20047D000 /* UIView+WHColorAtPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = B05DDE561CFE96E20047D000 /* UIView+WHColorAtPoint.m */; };
+		B05DDE7A1CFEFCE60047D000 /* WHChangeCssColor.m in Sources */ = {isa = PBXBuildFile; fileRef = B05DDE791CFEFCE60047D000 /* WHChangeCssColor.m */; };
+		B05DDE7E1CFF03190047D000 /* WHChooseStyleController.m in Sources */ = {isa = PBXBuildFile; fileRef = B05DDE7C1CFF03190047D000 /* WHChooseStyleController.m */; };
+		B05DDE7F1CFF03190047D000 /* WHChooseStyleController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B05DDE7D1CFF03190047D000 /* WHChooseStyleController.xib */; };
+		B09182F01CFC23CD00BE1787 /* WHSettingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B09182EE1CFC23CD00BE1787 /* WHSettingTableViewController.m */; };
+		B091831D1CFC302E00BE1787 /* WHSettingTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B091831C1CFC302E00BE1787 /* WHSettingTableViewController.xib */; };
+		B091831F1CFC5FEE00BE1787 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B091831E1CFC5FED00BE1787 /* Assets.xcassets */; };
+		B09BDEFF1CFDC6F700B6AEFA /* UIColor+WHColor.m in Sources */ = {isa = PBXBuildFile; fileRef = B09BDEFE1CFDC6F700B6AEFA /* UIColor+WHColor.m */; };
 		B0AB637F1CE71149000C3BEA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B0AB637E1CE71149000C3BEA /* main.m */; };
 		B0AB63821CE71149000C3BEA /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B0AB63811CE71149000C3BEA /* AppDelegate.m */; };
 		B0AB638D1CE71149000C3BEA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B0AB638B1CE71149000C3BEA /* LaunchScreen.storyboard */; };
@@ -32,11 +40,13 @@
 		B0B33A3A1CED8DB4005C65F7 /* MBProgressHUD+KR.m in Sources */ = {isa = PBXBuildFile; fileRef = B0B33A361CED8DB4005C65F7 /* MBProgressHUD+KR.m */; };
 		B0B33A3B1CED8DB4005C65F7 /* MBProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B0B33A371CED8DB4005C65F7 /* MBProgressHUD.bundle */; };
 		B0B33A3C1CED8DB4005C65F7 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = B0B33A391CED8DB4005C65F7 /* MBProgressHUD.m */; };
-		B0B33A3E1CEDB368005C65F7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B0B33A3D1CEDB368005C65F7 /* Assets.xcassets */; };
 		B0B33A421CEDEC64005C65F7 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B0B33A441CEDEC64005C65F7 /* Localizable.strings */; };
 		B0B33A491CEDED20005C65F7 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B0B33A4B1CEDED20005C65F7 /* InfoPlist.strings */; };
 		B0C556671CEC3E8D002D1996 /* WHDownloadListController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0C556661CEC3E8D002D1996 /* WHDownloadListController.m */; };
 		B0C5566A1CEC4478002D1996 /* WHDownloadFile.m in Sources */ = {isa = PBXBuildFile; fileRef = B0C556691CEC4478002D1996 /* WHDownloadFile.m */; };
+		B0C77BB91D013BD400B1152B /* RoundColorPickView.m in Sources */ = {isa = PBXBuildFile; fileRef = B0C77BB41D013BD400B1152B /* RoundColorPickView.m */; };
+		B0C77BBA1D013BD400B1152B /* LineColorPickView.m in Sources */ = {isa = PBXBuildFile; fileRef = B0C77BB61D013BD400B1152B /* LineColorPickView.m */; };
+		B0C77BBB1D013BD400B1152B /* WHColorSelectController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0C77BB81D013BD400B1152B /* WHColorSelectController.m */; };
 		B0C97DA81CF3304400866A69 /* WHTapHelpView.m in Sources */ = {isa = PBXBuildFile; fileRef = B0C97DA71CF3304400866A69 /* WHTapHelpView.m */; };
 		B0C97DAD1CF3307A00866A69 /* WHDownloadTool.m in Sources */ = {isa = PBXBuildFile; fileRef = B0C97DAA1CF3307A00866A69 /* WHDownloadTool.m */; };
 		B0C97DAE1CF3307A00866A69 /* WHFileListTool.m in Sources */ = {isa = PBXBuildFile; fileRef = B0C97DAC1CF3307A00866A69 /* WHFileListTool.m */; };
@@ -65,6 +75,19 @@
 		B006B4F31CEB3B000053B687 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		B04324BC1CF451A800EF24E7 /* WHPanHelpView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WHPanHelpView.h; sourceTree = "<group>"; };
 		B04324BD1CF451A800EF24E7 /* WHPanHelpView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WHPanHelpView.m; sourceTree = "<group>"; };
+		B05DDE551CFE96E20047D000 /* UIView+WHColorAtPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+WHColorAtPoint.h"; sourceTree = "<group>"; };
+		B05DDE561CFE96E20047D000 /* UIView+WHColorAtPoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+WHColorAtPoint.m"; sourceTree = "<group>"; };
+		B05DDE781CFEFCE60047D000 /* WHChangeCssColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WHChangeCssColor.h; sourceTree = "<group>"; };
+		B05DDE791CFEFCE60047D000 /* WHChangeCssColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WHChangeCssColor.m; sourceTree = "<group>"; };
+		B05DDE7B1CFF03190047D000 /* WHChooseStyleController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WHChooseStyleController.h; sourceTree = "<group>"; };
+		B05DDE7C1CFF03190047D000 /* WHChooseStyleController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WHChooseStyleController.m; sourceTree = "<group>"; };
+		B05DDE7D1CFF03190047D000 /* WHChooseStyleController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WHChooseStyleController.xib; sourceTree = "<group>"; };
+		B09182ED1CFC23CD00BE1787 /* WHSettingTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WHSettingTableViewController.h; sourceTree = "<group>"; };
+		B09182EE1CFC23CD00BE1787 /* WHSettingTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WHSettingTableViewController.m; sourceTree = "<group>"; };
+		B091831C1CFC302E00BE1787 /* WHSettingTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WHSettingTableViewController.xib; sourceTree = "<group>"; };
+		B091831E1CFC5FED00BE1787 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		B09BDEFD1CFDC6F700B6AEFA /* UIColor+WHColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+WHColor.h"; sourceTree = "<group>"; };
+		B09BDEFE1CFDC6F700B6AEFA /* UIColor+WHColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+WHColor.m"; sourceTree = "<group>"; };
 		B0AB637A1CE71149000C3BEA /* MyCoolCodeReader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyCoolCodeReader.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B0AB637E1CE71149000C3BEA /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		B0AB63801CE71149000C3BEA /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -115,7 +138,6 @@
 		B0B33A371CED8DB4005C65F7 /* MBProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MBProgressHUD.bundle; sourceTree = "<group>"; };
 		B0B33A381CED8DB4005C65F7 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		B0B33A391CED8DB4005C65F7 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
-		B0B33A3D1CEDB368005C65F7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B0B33A411CEDEC39005C65F7 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		B0B33A461CEDEC69005C65F7 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		B0B33A4A1CEDED20005C65F7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -125,6 +147,12 @@
 		B0C556661CEC3E8D002D1996 /* WHDownloadListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WHDownloadListController.m; sourceTree = "<group>"; };
 		B0C556681CEC4478002D1996 /* WHDownloadFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WHDownloadFile.h; sourceTree = "<group>"; };
 		B0C556691CEC4478002D1996 /* WHDownloadFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WHDownloadFile.m; sourceTree = "<group>"; };
+		B0C77BB31D013BD400B1152B /* RoundColorPickView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RoundColorPickView.h; sourceTree = "<group>"; };
+		B0C77BB41D013BD400B1152B /* RoundColorPickView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RoundColorPickView.m; sourceTree = "<group>"; };
+		B0C77BB51D013BD400B1152B /* LineColorPickView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LineColorPickView.h; sourceTree = "<group>"; };
+		B0C77BB61D013BD400B1152B /* LineColorPickView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LineColorPickView.m; sourceTree = "<group>"; };
+		B0C77BB71D013BD400B1152B /* WHColorSelectController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WHColorSelectController.h; sourceTree = "<group>"; };
+		B0C77BB81D013BD400B1152B /* WHColorSelectController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WHColorSelectController.m; sourceTree = "<group>"; };
 		B0C97DA61CF3304400866A69 /* WHTapHelpView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WHTapHelpView.h; sourceTree = "<group>"; };
 		B0C97DA71CF3304400866A69 /* WHTapHelpView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WHTapHelpView.m; sourceTree = "<group>"; };
 		B0C97DA91CF3307A00866A69 /* WHDownloadTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WHDownloadTool.h; sourceTree = "<group>"; };
@@ -183,6 +211,10 @@
 			children = (
 				B006B4F01CEB3AC40053B687 /* UIImage+WHThumbNailImage.h */,
 				B006B4F11CEB3AC40053B687 /* UIImage+WHThumbNailImage.m */,
+				B09BDEFD1CFDC6F700B6AEFA /* UIColor+WHColor.h */,
+				B09BDEFE1CFDC6F700B6AEFA /* UIColor+WHColor.m */,
+				B05DDE551CFE96E20047D000 /* UIView+WHColorAtPoint.h */,
+				B05DDE561CFE96E20047D000 /* UIView+WHColorAtPoint.m */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -207,6 +239,7 @@
 		B0AB637C1CE71149000C3BEA /* MyCoolCodeReader */ = {
 			isa = PBXGroup;
 			children = (
+				B091831E1CFC5FED00BE1787 /* Assets.xcassets */,
 				B0AB63961CE71716000C3BEA /* Model */,
 				B0AB63991CE71716000C3BEA /* View */,
 				B0AB63941CE71716000C3BEA /* Controller */,
@@ -221,7 +254,6 @@
 				B0E44A3F1CE99208003EBC83 /* HelloWorld.txt */,
 				B0AB637D1CE71149000C3BEA /* Supporting Files */,
 				B006B4F31CEB3B000053B687 /* PrefixHeader.pch */,
-				B0B33A3D1CEDB368005C65F7 /* Assets.xcassets */,
 				B0B33A4B1CEDED20005C65F7 /* InfoPlist.strings */,
 				B0B33A441CEDEC64005C65F7 /* Localizable.strings */,
 			);
@@ -252,6 +284,13 @@
 				B0F466B81CEF45C400FC2457 /* WHDrawViewController.h */,
 				B0F466B91CEF45C400FC2457 /* WHDrawViewController.m */,
 				B0F466BA1CEF45C400FC2457 /* WHDrawViewController.xib */,
+				B09182ED1CFC23CD00BE1787 /* WHSettingTableViewController.h */,
+				B09182EE1CFC23CD00BE1787 /* WHSettingTableViewController.m */,
+				B091831C1CFC302E00BE1787 /* WHSettingTableViewController.xib */,
+				B05DDE7B1CFF03190047D000 /* WHChooseStyleController.h */,
+				B05DDE7C1CFF03190047D000 /* WHChooseStyleController.m */,
+				B05DDE7D1CFF03190047D000 /* WHChooseStyleController.xib */,
+				B0C77BB21D013BCA00B1152B /* WHColorSelectController */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -294,6 +333,8 @@
 				B0C97DAA1CF3307A00866A69 /* WHDownloadTool.m */,
 				B0C97DAB1CF3307A00866A69 /* WHFileListTool.h */,
 				B0C97DAC1CF3307A00866A69 /* WHFileListTool.m */,
+				B05DDE781CFEFCE60047D000 /* WHChangeCssColor.h */,
+				B05DDE791CFEFCE60047D000 /* WHChangeCssColor.m */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -376,6 +417,19 @@
 				B0B33A391CED8DB4005C65F7 /* MBProgressHUD.m */,
 			);
 			path = MBProgessHUD;
+			sourceTree = "<group>";
+		};
+		B0C77BB21D013BCA00B1152B /* WHColorSelectController */ = {
+			isa = PBXGroup;
+			children = (
+				B0C77BB31D013BD400B1152B /* RoundColorPickView.h */,
+				B0C77BB41D013BD400B1152B /* RoundColorPickView.m */,
+				B0C77BB51D013BD400B1152B /* LineColorPickView.h */,
+				B0C77BB61D013BD400B1152B /* LineColorPickView.m */,
+				B0C77BB71D013BD400B1152B /* WHColorSelectController.h */,
+				B0C77BB81D013BD400B1152B /* WHColorSelectController.m */,
+			);
+			path = WHColorSelectController;
 			sourceTree = "<group>";
 		};
 		B0E44A811CE9B4DF003EBC83 /* PBWebViewController */ = {
@@ -474,13 +528,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				B0AB638D1CE71149000C3BEA /* LaunchScreen.storyboard in Resources */,
+				B05DDE7F1CFF03190047D000 /* WHChooseStyleController.xib in Resources */,
 				B0B33A491CEDED20005C65F7 /* InfoPlist.strings in Resources */,
 				B0B33A421CEDEC64005C65F7 /* Localizable.strings in Resources */,
 				B0E44A3C1CE98BF0003EBC83 /* html in Resources */,
 				B0B33A3B1CED8DB4005C65F7 /* MBProgressHUD.bundle in Resources */,
 				B0F466BC1CEF45C400FC2457 /* WHDrawViewController.xib in Resources */,
 				B0E44A401CE99208003EBC83 /* HelloWorld.txt in Resources */,
-				B0B33A3E1CEDB368005C65F7 /* Assets.xcassets in Resources */,
+				B091831F1CFC5FEE00BE1787 /* Assets.xcassets in Resources */,
+				B091831D1CFC302E00BE1787 /* WHSettingTableViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -496,6 +552,9 @@
 				B0C97DAD1CF3307A00866A69 /* WHDownloadTool.m in Sources */,
 				B0E44A9C1CE9DB8A003EBC83 /* AFHTTPRequestOperation.m in Sources */,
 				B0B33A271CED6CC0005C65F7 /* aeskey.c in Sources */,
+				B05DDE7E1CFF03190047D000 /* WHChooseStyleController.m in Sources */,
+				B09BDEFF1CFDC6F700B6AEFA /* UIColor+WHColor.m in Sources */,
+				B0C77BBA1D013BD400B1152B /* LineColorPickView.m in Sources */,
 				B0B33A301CED6CC0005C65F7 /* mztools.c in Sources */,
 				B0B33A291CED6CC0005C65F7 /* entropy.c in Sources */,
 				B0B33A3C1CED8DB4005C65F7 /* MBProgressHUD.m in Sources */,
@@ -514,6 +573,7 @@
 				B0B33A281CED6CC0005C65F7 /* aestab.c in Sources */,
 				B0E44AAA1CE9EE6D003EBC83 /* WHWebViewController.m in Sources */,
 				B0B33A321CED6CC0005C65F7 /* zip.c in Sources */,
+				B05DDE7A1CFEFCE60047D000 /* WHChangeCssColor.m in Sources */,
 				B0B33A2D1CED6CC0005C65F7 /* pwd2key.c in Sources */,
 				B0B33A331CED6CC0005C65F7 /* SSZipArchive.m in Sources */,
 				B0AB63A51CE71C3A000C3BEA /* WHFile.m in Sources */,
@@ -521,13 +581,17 @@
 				B0AB637F1CE71149000C3BEA /* main.m in Sources */,
 				B0C97DAE1CF3307A00866A69 /* WHFileListTool.m in Sources */,
 				B0E44AA01CE9DB8A003EBC83 /* AFSecurityPolicy.m in Sources */,
+				B0C77BBB1D013BD400B1152B /* WHColorSelectController.m in Sources */,
 				B0B33A261CED6CC0005C65F7 /* aescrypt.c in Sources */,
 				B0E44A871CE9BACD003EBC83 /* WHWebsiteListController.m in Sources */,
 				B0B33A2A1CED6CC0005C65F7 /* fileenc.c in Sources */,
 				B0E44AA21CE9DB8A003EBC83 /* AFURLRequestSerialization.m in Sources */,
 				B0B33A311CED6CC0005C65F7 /* unzip.c in Sources */,
 				B0E44A9F1CE9DB8A003EBC83 /* AFNetworkReachabilityManager.m in Sources */,
+				B0C77BB91D013BD400B1152B /* RoundColorPickView.m in Sources */,
 				B04324BE1CF451A800EF24E7 /* WHPanHelpView.m in Sources */,
+				B09182F01CFC23CD00BE1787 /* WHSettingTableViewController.m in Sources */,
+				B05DDE571CFE96E20047D000 /* UIView+WHColorAtPoint.m in Sources */,
 				B0E44AA31CE9DB8A003EBC83 /* AFURLResponseSerialization.m in Sources */,
 				B0E44A3A1CE987DF003EBC83 /* SourceViewController.m in Sources */,
 				B006B4F21CEB3AC40053B687 /* UIImage+WHThumbNailImage.m in Sources */,

@@ -24,5 +24,14 @@
 "screenShot" = "截图笔记";
 "save" = "保存";
 "saveSuccess" = "成功保存至相册";
+"saveFailed" = "请设置相册权限";
 "deleteSuggestion" = "如果您想要删除所画的方框，长按方框，然后进行拖拽，松开后，方框就被删除";
 "ok" = "好";
+"codeHighlightStyle" = "代码高亮风格";
+"showHelpOnce" = "打开帮助向导一次";
+"setting" = "设置";
+"color" = "颜色";
+"segment1" = "经典白";
+"segment2" = "经典黑";
+"segment3" = "自定义";
+"verify" = "确定";
